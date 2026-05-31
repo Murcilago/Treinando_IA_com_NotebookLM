@@ -23,14 +23,20 @@ Fontes selecionadas e carregadas no NotebookLM:
 | 2 | Delta Lake Documentation Oficial | Texto | https://docs.delta.io/latest/index.html |
 | 3 | Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores (paper original) | PDF | https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf |
 | 4 | Apache Spark — Spark SQL, DataFrames and Datasets Guide | Texto | https://spark.apache.org/docs/latest/sql-programming-guide.html |
-| 5 | Databricks Certified Data Engineer Associate — Exam Guide | PDF | https://www.databricks.com/learn/certification/data-engineer-associate |
+| 5 | Databricks Certified Data Engineer Associate | Texto | https://www.databricks.com/learn/certification/data-engineer-associate |
+| 6 | Databricks Certified Data Engineer Associate — Exam Guide | PDF | https://www.databricks.com/sites/default/files/2026-05/databricks-certified-data-engineer-associate-exam-guide-may-2026.pdf |
 
 ---
 
 ## Engenharia de Prompts e Cicatrizes
 
-### Prompts Testados
-
+### Teste de fontes e features do notebooklm
+####    Prompt 1 - Qual a mensagem do erro 0A000?
+        R: As fontes fornecidas não contêm a mensagem específica para o erro 0A000. O material disponível apenas lista "Error Conditions" (Condições de Erro) no índice do guia do Spark SQL, mas não detalha os códigos de erro ou suas respectivas mensagens, focando apenas em uma introdução geral sobre Spark SQL, DataFrames e Datasets.
+##### Contexto & Aprendizagem
+        A pergunta foi feita após colocar apenas a fonte (4). Como se trata de uma página com links para o conteúdo relevante e o notebooklm não faz webcrawling automático apenas o conteúdo imediatamente disponível no link é utilizado.
+        Uma solução viável seria fazer um webcrawler em python definindo um nível razoável de profundidade de download de páginas. Devido ao limite de fontes do notebooklm, como uma pesquisa poderia levar a vários arquivos, optou-se por gerar resultados em um único arquivo html para a url primária pesquisada. Veja mais em [Mr. Crawley](tools/READme.md)
+        
 #### Prompt 1
 **Pergunta:** "Com base nas fontes carregadas, explique a diferença entre um Data Lake, um Data Warehouse e um Lakehouse. Use exemplos práticos."
 
