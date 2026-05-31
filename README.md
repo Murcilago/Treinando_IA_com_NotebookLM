@@ -23,8 +23,7 @@ Fontes selecionadas e carregadas no NotebookLM:
 | 2 | Delta Lake Documentation Oficial | Texto | https://docs.delta.io/latest/index.html |
 | 3 | Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores (paper original) | PDF | https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf |
 | 4 | Apache Spark — Spark SQL, DataFrames and Datasets Guide | Texto | https://spark.apache.org/docs/latest/sql-programming-guide.html |
-| 5 | Databricks Certified Data Engineer Associate | Texto | https://www.databricks.com/learn/certification/data-engineer-associate |
-| 6 | Databricks Certified Data Engineer Associate — Exam Guide | PDF | https://www.databricks.com/sites/default/files/2026-05/databricks-certified-data-engineer-associate-exam-guide-may-2026.pdf |
+| 5 | Databricks Certified Data Engineer Associate — Exam Guide | PDF | https://www.databricks.com/sites/default/files/2026-05/databricks-certified-data-engineer-associate-exam-guide-may-2026.pdf |
 
 ---
 
@@ -36,6 +35,26 @@ Fontes selecionadas e carregadas no NotebookLM:
 ##### Contexto & Aprendizagem
 A pergunta foi feita após colocar apenas a fonte (4). Como se trata de uma página com links para o conteúdo relevante e o notebooklm não faz webcrawling automático apenas o conteúdo imediatamente disponível no link é utilizado.
 Uma solução viável seria fazer um webcrawler em python definindo um nível razoável de profundidade de download de páginas. Devido ao limite de fontes do notebooklm, como uma pesquisa poderia levar a vários arquivos, optou-se por gerar resultados em um único arquivo html para a url primária pesquisada. Veja mais em [Mr. Crawley](tools/README.md)
+
+Após gerar um pdf, baixando o conteúdo das páginas com profundidade de links=1, e trocando a fonte no notebooklm do link (4) para o pdf consolidado, obtemos - após um tempo considerávelmente maior de loading dado o tamanho da referência - a resposta:
+> No Spark SQL, o código 0A000 não se refere a uma única mensagem de erro, mas sim a um SQLSTATE (estado de erro) genérico que agrupa uma grande variedade de condições e subcondições de erro. Na prática, este código é utilizado para categorizar operações, tipos ou recursos que não são suportados pelo Spark (equivalente à classe de erro de "Feature Not Supported" no padrão SQL).
+A mensagem exata exibida no console dependerá da operação específica que falhou. Aqui estão algumas das principais mensagens e subcondições que acionam o erro 0A000:
+
+    CANNOT_INVOKE_IN_TRANSFORMATIONS: "Dataset transformations and actions can only be invoked by the driver, not inside of other Dataset transformations" (Transformações e ações de Dataset só podem ser invocadas pelo driver, e não dentro de outras transformações de Dataset).
+    CONCURRENT_QUERY: "Another instance of this query was just started by a concurrent session." (Outra instância desta consulta acabou de ser iniciada por uma sessão simultânea).
+    DATATYPE_CANNOT_ORDER: "Type <dataType> does not support ordered operations." (O tipo de dado especificado não suporta operações de ordenação).
+    DISTINCT_WINDOW_FUNCTION_UNSUPPORTED: "Distinct window functions are not supported." (Funções de janela com a cláusula DISTINCT não são suportadas).
+    CANNOT_UPDATE_FIELD: Ocorre quando se tenta atualizar diretamente um campo cujo tipo de dado não suporta a operação direta, como estruturas aninhadas (ARRAY, MAP, STRUCT ou INTERVAL).
+    UNSUPPORTED_DATATYPE: "Unsupported data type <typeName>." (O tipo de dado não é suportado).
+    UNSUPPORTED_JOIN_TYPE: "Unsupported join type <typ>." (O tipo de junção (JOIN) exigido não é suportado pelo Spark).
+    UNSUPPORTED_SAVE_MODE: "The save mode <saveMode> is not supported for: an existent/non-existent path." (O modo de salvamento utilizado não é suportado para caminhos já existentes ou inexistentes).
+    NOT_SUPPORTED_COMMAND_WITHOUT_HIVE_SUPPORT: O comando não é suportado a menos que o suporte ao Hive seja ativado através da configuração "spark.sql.catalogImplementation" para "hive".
+
+Como resolver: Como o código 0A000 abrange uma ampla gama de funcionalidades não suportadas, a forma correta de diagnosticar o erro é observar a subcondição que acompanha o código de estado na sua mensagem de erro (por exemplo, #UNSUPPORTED_DATATYPE ou #CANNOT_UPDATE_FIELD) e corrigir a lógica da sua consulta ou código de acordo com a limitação apontada pelo Spark.
+
+
+### Prompt 2 - Qual a mensagem do erro 0A000?
+
         
 #### Prompt 1
 **Pergunta:** "Com base nas fontes carregadas, explique a diferença entre um Data Lake, um Data Warehouse e um Lakehouse. Use exemplos práticos."
