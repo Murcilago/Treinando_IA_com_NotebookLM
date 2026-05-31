@@ -19,14 +19,14 @@ Fontes selecionadas e carregadas no NotebookLM:
 
 | # | Título | Tipo | Link | Processado com * | 
 |---|--------|------|------|----------------|
-| 1 | Databricks Documentation — Data Engineering | Site consolidado (pdf) | https://docs.databricks.com/en/introduction/index.html | Mr. Crawley --depth 1 (mai/2026) |
-| 2 | Delta Lake Documentation Oficial | Site consolidado (pdf) | https://docs.delta.io/latest/index.html | Mr. Crawley --depth 1 (mai/2026) |
+| 1 | Databricks Documentation — Data Engineering | PDF** | https://docs.databricks.com/en/introduction/index.html | Mr. Crawley --depth 1 (mai/2026) |
+| 2 | Delta Lake Documentation Oficial | PDF** | https://docs.delta.io/latest/index.html | Mr. Crawley --depth 1 (mai/2026) |
 | 3 | Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores (paper original) | PDF | https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf | Download direto (mai/2026) |
-| 4 | Apache Spark — Spark SQL, DataFrames and Datasets Guide | Site consolidado (pdf) | https://spark.apache.org/docs/latest/sql-programming-guide.html | Mr. Crawley --depth 1 (mai/2026) |
+| 4 | Apache Spark — Spark SQL, DataFrames and Datasets Guide | PDF** | https://spark.apache.org/docs/latest/sql-programming-guide.html | Mr. Crawley --depth 1 (mai/2026) |
 | 5 | Databricks Certified Data Engineer Associate — Exam Guide | PDF | https://www.databricks.com/sites/default/files/2026-05/databricks-certified-data-engineer-associate-exam-guide-may-2026.pdf | Download direto (mai/2026) |
 
-*durante a curadoria foi observada a necessidade de um webcrawler para páginas com links. Detalhes no primeiro prompt.
-
+* durante a curadoria foi observada a necessidade de um webcrawler para páginas com links. Detalhes no primeiro prompt.
+** sites consolidados em html com Mr. Crawley e convertidos para PDF.  
 ---
 
 ## Engenharia de Prompts e Cicatrizes
