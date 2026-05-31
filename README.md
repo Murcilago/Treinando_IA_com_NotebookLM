@@ -53,6 +53,8 @@ A mensagem exata exibida no console dependerá da operação específica que fal
 Como resolver: Como o código 0A000 abrange uma ampla gama de funcionalidades não suportadas, a forma correta de diagnosticar o erro é observar a subcondição que acompanha o código de estado na sua mensagem de erro (por exemplo, #UNSUPPORTED_DATATYPE ou #CANNOT_UPDATE_FIELD) e corrigir a lógica da sua consulta ou código de acordo com a limitação apontada pelo Spark.
 
 
+
+
 ### Prompt 2 - Qual a mensagem do erro 0A000?
 
         
