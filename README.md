@@ -25,8 +25,10 @@ Fontes selecionadas e carregadas no NotebookLM:
 | 4 | Apache Spark — Spark SQL, DataFrames and Datasets Guide | PDF** | https://spark.apache.org/docs/latest/sql-programming-guide.html | Mr. Crawley --depth 1 (mai/2026) |
 | 5 | Databricks Certified Data Engineer Associate — Exam Guide | PDF | https://www.databricks.com/sites/default/files/2026-05/databricks-certified-data-engineer-associate-exam-guide-may-2026.pdf | Download direto (mai/2026) |
 
-* durante a curadoria foi observada a necessidade de um webcrawler para páginas com links. Detalhes no primeiro prompt.
-** sites consolidados em html com Mr. Crawley e convertidos para PDF.  
+\* Durante a curadoria foi observada a necessidade de um webcrawler para páginas com links. Detalhes no primeiro prompt.
+
+\*\* Sites consolidados em html com Mr. Crawley e convertidos para PDF.  
+
 ---
 
 ## Engenharia de Prompts e Cicatrizes
