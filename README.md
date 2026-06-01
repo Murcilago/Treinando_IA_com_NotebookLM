@@ -33,9 +33,9 @@ Fontes selecionadas e carregadas no NotebookLM:
 
 ## Engenharia de Prompts e Cicatrizes
 
-###    Prompt 1 - Qual a mensagem do erro 0A000?
+### Prompt 1 - Qual a mensagem do erro 0A000?
 > As fontes fornecidas não contêm a mensagem específica para o erro 0A000. O material disponível apenas lista "Error Conditions" (Condições de Erro) no índice do guia do Spark SQL, mas não detalha os códigos de erro ou suas respectivas mensagens, focando apenas em uma introdução geral sobre Spark SQL, DataFrames e Datasets.
-##### Contexto & Aprendizagem
+#### Contexto & Aprendizagem
 A pergunta foi feita após colocar apenas a fonte (4). Como se trata de uma página com links para o conteúdo relevante e o notebooklm não faz webcrawling automático apenas o conteúdo imediatamente disponível no link é utilizado.
 Uma solução viável seria fazer um webcrawler em python definindo um nível razoável de profundidade de download de páginas. Devido ao limite de fontes do notebooklm, como uma pesquisa poderia levar a vários arquivos, optou-se por gerar resultados em um único arquivo html para a url primária pesquisada. Veja mais em [Mr. Crawley](tools/README.md)
 
@@ -72,7 +72,7 @@ Após gerar um pdf, baixando o conteúdo das páginas com profundidade de links=
 >
 >    Exemplo prático: Uma arquitetura unificada (como o padrão Medallion) onde os dados brutos de várias fontes chegam e são armazenados de forma barata (camada Bronze). Esses dados são então validados e enriquecidos com a confiabilidade de transações ACID (camada Prata) e organizados em tabelas finais (camada Gold). A partir desse mesmo ambiente, um cientista de dados pode extrair recursos para um aplicativo de Machine Learning, enquanto um analista de negócios gera um dashboard de BI em tempo real, sem a necessidade de duplicar ou sincronizar os dados entre sistemas diferentes.
 
-##### Contexto & Aprendizagem
+#### Contexto & Aprendizagem
 
 A resposta foi validada com um segundo modelo (ChatGPT), que inicialmente apontou imprecisões técnicas. Após apresentar as fontes utilizadas, o modelo revisou sua crítica e concluiu que a resposta é uma **síntese fiel da visão Databricks/Delta Lake**, não um erro factual.
   
@@ -96,7 +96,7 @@ Garantias ACID do Delta Lake:
 >    Atomicidade de Gravação do Log: O sucesso de um commit depende da criação atômica do próprio arquivo json. Se duas aplicações tentarem registrar o 000003.json ao mesmo tempo, sistemas baseados em arquivos na nuvem (ou coordenadores de concorrência) assegurarão que apenas uma consiga, e a outra terá que tentar na próxima versão (000004.json), resolvendo o conflito sem danificar os dados.
 >    Checkpoints (Compactação do Log em Parquet): Apenas usar arquivos JSON faria a leitura do histórico e do estado atual demorar com o tempo. Para contornar isso, o Delta Lake processa e comprime logs periodicamente em Checkpoints (por padrão, a cada 10 transações) gerados em arquivos Apache Parquet. Esses checkpoints guardam todo o estado válido, removendo ações redundantes (ex: se um arquivo foi listado num "Add" no log 1, e teve um "Remove" no log 5, no checkpoint 10 isso é resumido). O uso de um formato colunar como o Parquet para os checkpoints entrega uma performance absurdamente mais alta para entender quais arquivos pertencem à tabela.
 
-##### Contexto & Aprendizagem
+#### Contexto & Aprendizagem
 
 A resposta foi validada com um segundo modelo (ChatGPT), que a classificou como tecnicamente sólida. Diferente do Prompt 2, não há viés relevante de fonte — a explicação está alinhada com a arquitetura real do Delta Lake, com forte referência ao paper original (fonte 3).
 
@@ -128,7 +128,7 @@ Dito isso, um terceiro modelo (Claude) avaliou ambas as respostas e apontou que 
 >    Exemplo de Pipeline Real: Um pipeline em SQL onde analistas criam uma Visualização Materializada (Materialized View) ou uma Streaming Table agregada. O script SQL pode fazer um JOIN (cruzamento) entre uma tabela Silver de "Pedidos" e uma de "Clientes", contabilizando o volume diário de vendas por estado (GROUP BY state, order_date). Essa view materializada Gold servirá os dados limpos diretamente a ferramentas analíticas de terceiros (como Power BI ou Tableau) através de um SQL Warehouse autogerenciado, permitindo que as equipes de negócios construam painéis (dashboards) sem ter que reprocessar ou lidar com lógicas pesadas de transformação.
 
 
-##### Contexto & Aprendizagem
+#### Contexto & Aprendizagem
 
 Resposta tecnicamente sólida e alinhada à visão Databricks. 
 O principal ponto de atenção: a Arquitetura Medallion é uma convenção lógica de organização de dados, não uma exigência tecnológica nem exclusividade do Delta Lake. Pode ser implementada com Iceberg, BigQuery, Snowflake ou até diretórios em S3. A resposta do NotebookLM, por refletir as fontes Databricks, tende a apresentar práticas comuns da plataforma como definições universais — o que são, na verdade, boas heurísticas, não regras arquiteturais obrigatórias:
@@ -153,7 +153,7 @@ O critério real da camada Gold é: pronta para consumo por um caso de negócio 
 >    Padrões de ingestão (em lote/batch, streaming e cargas incrementais) a partir de arquivos locais ou através do Lakeflow Connect.
 >    Utilização do comando COPY INTO e do Auto Loader (incluindo evolução e imposição de esquema) para carregar dados em tabelas do Unity Catalog.
 >    Conexões via clientes REST e JDBC/ODBC, além do processamento de dados semiestruturados/não estruturados (como JSON).
->    Saber priorizar o método correto de ingestão com base em volume, frequência e requisitos de governança.0
+>    Saber priorizar o método correto de ingestão com base em volume, frequência e requisitos de governança.
 >
 > 3. Data Transformation and Modeling (Transformação e Modelagem)
 >
@@ -188,7 +188,7 @@ O critério real da camada Gold é: pronta para consumo por um caso de negócio 
 >    Configuração de controle de acessos em hierarquias de segurança usando comandos SQL como GRANT, REVOKE e DENY.
 >    Controle centralizado para dados sensíveis utilizando políticas de mascaramento de colunas (column-level masking) e filtragem em nível de linha (row-level security) no Unity Catalog.
 
-##### Contexto & Aprendizagem
+#### Contexto & Aprendizagem
 Esta foi a primeira pergunta onde a limitação estava nas fontes, não no NotebookLM: o guia oficial (fonte 5) lista as categorias do exame mas não publica a distribuição de questões por tópico — e a resposta refletiu isso fielmente, reproduzindo as categorias sem ponderá-las.
 
 A validação com o ChatGPT gerou uma priorização em tiers que vai além das fontes carregadas — útil como orientação de estudo, mas não verificável, já que o modelo não citou as bases para a hierarquia sugerida.
@@ -201,6 +201,76 @@ Priorização sugerida para o estudo:
 - Tier 4 (menor peso no Associate): CI/CD, Bundles, Liquid Clustering
 
 Nota: os tópicos de Delta Lake e Transaction Log já foram cobertos nos Prompts 3 e 4 em nível acima do exigido pelo Associate — o gap de estudo está em Spark SQL prático, Auto Loader e Unity Catalog.
+
+### Prompt 6 - Explique os tipos de cluster no Databricks e como o Lakeflow Jobs orquestra pipelines.
+
+> **1. Tipos de Cluster**
+>
+> - **All-Purpose Cluster:** Configurado para desenvolvimento interativo, exploração de dados e consultas ad hoc por múltiplos usuários simultâneos. Permanece ativo até encerramento manual ou limite de inatividade. *(Informação parcialmente externa às fontes)*
+> - **Job Cluster:** Projetado para pipelines ETL automatizados e workloads de produção. Provisionado dinamicamente no início do job e encerrado ao término, garantindo recursos limpos e isolados. *(Informação parcialmente externa às fontes)*
+>
+> **2. Orquestração com Lakeflow Jobs**
+>
+> - **DAGs:** As tarefas e sua ordem de execução são representadas por um Grafo Acíclico Direcionado (DAG), permitindo desde pipelines simples até fluxos com centenas de tarefas interconectadas.
+> - **Tipos de tarefas suportadas:** Notebooks, Consultas SQL, Painéis (Dashboards), Scripts Python e Pipeline Tasks (para invocar Lakeflow Spark Declarative Pipelines, incluindo streaming tables e materialized views).
+> - **Dependências e fluxo de controle:** Tarefas são configuradas com dependências mútuas (uma tarefa só inicia após a conclusão da "pai"). Suporta ramificações condicionais (if/else), loops (for each) e retentativas automáticas em caso de falha.
+> - **Tipos de Trigger:**
+>     - *Baseado em tempo (Time-based):* execução em cronograma fixo (ex: todos os dias às 06h00).
+>     - *Orientado a dados (Data-driven):* execução reativa a eventos — chegada de novos arquivos (file arrival) ou atualização de tabelas (table update).
+
+#### Contexto & Aprendizagem
+
+O NotebookLM foi transparente ao sinalizar explicitamente quais informações vieram das fontes e quais foram complementadas com conhecimento externo — comportamento esperado e que reforça sua confiabilidade como ferramenta de estudo.
+
+A validação com o ChatGPT (8,5/10) apontou uma correção importante: o critério de escolha entre All-Purpose e Job Cluster **não é custo**, mas sim o tipo de uso — **interativo vs. automatizado**. Custo é consequência, não critério. Essa é a distinção que a prova cobra.
+
+Pegadinhas frequentes identificadas:
+- *"Pipeline ETL roda às 2h da manhã sem interação humana — qual cluster?"* → **Job Cluster**
+- *"Qual trigger usar quando um arquivo chega ao storage?"* → **Data-driven trigger**
+
+### Prompt 7 - Explique o Auto Loader e o Delta Live Tables (DLT) e como se relacionam.
+
+> **1. Auto Loader**
+>
+> - **O que é:** Ferramenta nativa construída sobre o Structured Streaming (fonte `cloudFiles`) para ingerir dados de armazenamentos em nuvem (S3, ADLS, GCS, Volumes) de forma eficiente, idempotente e contínua para o Lakehouse.
+> - **Detecção incremental:** Rastreia estado via diretório de checkpoint tolerante a falhas. Dois modos de descoberta:
+>     - *Directory Listing:* lista arquivos de forma otimizada; custo escala pelo número de arquivos ingeridos.
+>     - *File Notification:* configura serviços de notificação na nuvem, eliminando listagem de diretórios — preferível para grandes volumes.
+> - **Schema Evolution e Enforcement:** Infere o esquema automaticamente, detecta desvios (schema drift), evolui o esquema para novas colunas e retém dados malformados sem perda.
+> - **Auto Loader vs. COPY INTO:**
+>     - *Auto Loader:* alta escala, streaming contínuo, schema evolution complexo.
+>     - *COPY INTO:* cargas incrementais menores, execução manual ou batch ocasional.
+>
+> **2. Delta Live Tables (DLT) — Lakeflow Spark Declarative Pipelines**
+>
+> - **O que é:** Framework declarativo (SQL e Python) onde você define *o que* transformar — o framework gerencia dependências, infraestrutura, escalonamento e tratamento de erros automaticamente.
+> - **Streaming Table** *(antiga Streaming Live Table):* criada com modificador `STREAM`, processa incrementalmente apenas novos dados — ideal para camada Bronze/ingestão.
+> - **Materialized View** *(antiga Live Table):* visualização pré-computada que reflete o estado atual dos dados, recalculando resultados e agregações — ideal para camada Gold.
+> - **Expectations (Qualidade de Dados):** Regras de validação aplicadas diretamente no pipeline. Três modos de violação:
+>     - *Warn:* registra a violação, mantém o dado.
+>     - *Drop:* descarta registros inválidos.
+>     - *Fail:* interrompe a atualização do pipeline.
+>
+> **3. Integração: Auto Loader dentro de pipelines DLT**
+>
+> - O Auto Loader é a principal porta de entrada de dados em pipelines declarativos. Ao criar uma Streaming Table lendo de cloud storage, o Auto Loader detecta arquivos continuamente.
+> - Dentro de um pipeline DLT, o framework gerencia automaticamente checkpoints e controle de estado — sem configuração manual de infraestrutura.
+> - Fluxo de referência: `Storage → Auto Loader → Streaming Table (Bronze) → Transformações (Silver) → Materialized View (Gold)`
+
+#### Contexto & Aprendizagem
+
+A melhor resposta do projeto até agora — 9 a 9,5/10 segundo o ChatGPT, totalmente alinhada com a forma atual de ensino da Databricks, incluindo a nomenclatura atualizada (Streaming Table / Materialized View em vez de Streaming Live Table / Live Table).
+
+Dois pontos que merecem destaque para a prova:
+
+- **Exactly-once é uma simplificação:** o Auto Loader por si só não garante semântica exactly-once — ela resulta da combinação com o Structured Streaming e o Delta Lake. Para o nível Associate a simplificação é aceitável, mas vale saber a nuance.
+- **Expectations têm três modos (Warn / Drop / Fail):** a resposta definiu o conceito corretamente mas não explicitou os modos — que são exatamente o que a prova costuma cobrar.
+
+Pegadinhas frequentes identificadas:
+- *"Chegam milhares de JSONs por minuto com schema variável — qual solução?"* → **Auto Loader com Schema Evolution**
+- *"Você quer bloquear registros com valores inválidos no pipeline — qual recurso?"* → **Expectation**
+- *"Você quer processar apenas novos eventos conforme chegam — qual objeto DLT?"* → **Streaming Table**
+- *"Você quer disponibilizar agregações para dashboards — qual objeto DLT?"* → **Materialized View**
 
 ---
 
@@ -229,15 +299,30 @@ Nota: os tópicos de Delta Lake e Transaction Log já foram cobertos nos Prompts
 
 #### Tópico 3: Arquitetura Medallion (Bronze / Silver / Gold)
 
-<!-- Resumo a preencher após estudo das fontes -->
+- **O que é:** Padrão de design de dados usado no Lakehouse para organizar e melhorar progressivamente a qualidade dos dados. É uma **convenção lógica**, não uma exigência tecnológica — pode ser implementada com Delta Lake, Iceberg, BigQuery ou até diretórios em S3.
+- **Camada Bronze (Ingestão):** Dados chegam de fontes diversas (streaming ou batch) e são armazenados próximos ao formato original, para rastreabilidade, auditoria e replay de pipelines. Metadados de ingestão (timestamp, origem, batch_id) são comuns e ainda pertencem à Bronze.
+- **Camada Silver (Limpeza / Transformação):** Dados higienizados, validados e integrados. Operações típicas: deduplicação, tratamento de nulos, padronização de tipos, joins, MERGE/SCD Tipo 2. Base confiável para consumo analítico e ciência de dados.
+- **Camada Gold (Consumo):** Dados prontos para um caso de negócio específico — dashboards de BI, KPIs, aplicações analíticas. Não é necessariamente agregada: tabelas dimensionais, fatos e Feature Stores também são Gold.
+- **Critério real da Gold:** pronta para consumo por um caso de negócio específico — não "agregada".
+- **Ferramentas Databricks associadas:** Auto Loader (ingestão Bronze), MERGE + PySpark (transformação Silver), Materialized Views e Streaming Tables (Gold).
 
 #### Tópico 4: Databricks — Clusters, Jobs e Auto Loader
 
-<!-- Resumo a preencher após estudo das fontes -->
+- **All-Purpose Cluster:** uso interativo, desenvolvimento, notebooks, múltiplos usuários simultâneos. Permanece ativo até encerramento manual.
+- **Job Cluster:** uso automatizado, pipelines ETL de produção. Provisionado no início do job e encerrado ao término. Critério de escolha: **interativo vs. automatizado** — não custo.
+- **Lakeflow Jobs:** orquestra pipelines via DAG. Suporta tarefas de Notebook, SQL, Python, Dashboard e Pipeline. Permite dependências entre tarefas, ramificações condicionais (if/else), loops (for each) e retentativas automáticas.
+- **Triggers:** *Time-based* (cronograma fixo) e *Data-driven* (file arrival ou table update).
+- **Auto Loader:** ingestão incremental de arquivos de cloud storage via Structured Streaming (`cloudFiles`). Dois modos: *Directory Listing* (padrão) e *File Notification* (eventos — melhor para grandes volumes).
+- **Auto Loader vs. COPY INTO:** Auto Loader para alta escala, streaming e schema evolution; COPY INTO para cargas batch menores e execução ocasional.
 
-#### Tópico 5: Delta Live Tables (DLT)
+#### Tópico 5: Delta Live Tables (DLT) — Lakeflow Spark Declarative Pipelines
 
-<!-- Resumo a preencher após estudo das fontes -->
+- **O que é:** Framework declarativo (SQL e Python) para pipelines de dados. Você define *o que* transformar; o framework gerencia dependências, infraestrutura e tratamento de erros automaticamente.
+- **Streaming Table:** processa incrementalmente apenas novos dados via streaming. Ideal para camada Bronze. Criada com modificador `STREAM`.
+- **Materialized View:** visualização pré-computada que reflete o estado atual dos dados, recalculando resultados e agregações. Ideal para camada Gold.
+- **Expectations:** regras de qualidade de dados aplicadas no pipeline. Três modos: *Warn* (registra e mantém), *Drop* (descarta o registro), *Fail* (interrompe o pipeline).
+- **Integração com Auto Loader:** dentro de pipelines DLT, o Auto Loader é a porta de entrada recomendada para cloud storage. O framework gerencia checkpoints automaticamente — sem configuração manual.
+- **Fluxo de referência:** `Storage → Auto Loader → Streaming Table (Bronze) → Transformações (Silver) → Materialized View (Gold)`
 
 ---
 
@@ -253,7 +338,7 @@ Nota: os tópicos de Delta Lake e Transaction Log já foram cobertos nos Prompts
 | Time Travel | Recurso que permite consultar versões históricas de uma Delta Table por versão ou timestamp |
 | Schema Enforcement | Rejeita gravações que não respeitam o schema definido na tabela |
 | Schema Evolution | Permite alterações no schema (ex: adição de colunas) de forma controlada |
-| Medallion Architecture | Padrão de camadas Bronze (raw), Silver (limpo) e Gold (agregado/consumo) |
+| Medallion Architecture | Padrão de camadas Bronze (raw), Silver (limpo) e Gold (pronto para consumo por caso de negócio específico) |
 | Auto Loader | Ferramenta do Databricks para ingestão incremental e automática de arquivos em cloud storage |
 | Delta Live Tables (DLT) | Framework declarativo do Databricks para pipelines de dados com qualidade e orquestração nativa |
 | Unity Catalog | Solução de governança centralizada de dados e IA no Databricks |
