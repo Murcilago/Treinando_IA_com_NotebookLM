@@ -110,11 +110,97 @@ Dito isso, um terceiro modelo (Claude) avaliou ambas as respostas e apontou que 
 
 ### Prompt 4 - Descreva a arquitetura Medallion (Bronze, Silver, Gold) e dê um exemplo de pipeline de dados real para cada camada.
 
+> A Arquitetura Medallion (Medalhão) é um padrão de design de dados utilizado no Data Lakehouse para organizar e melhorar progressivamente a qualidade dos dados à medida que eles fluem através de diferentes camadas lógicas. O objetivo desse padrão é estabelecer uma "única fonte da verdade" para a organização, servindo adequadamente tanto equipes de BI quanto de ciência de dados. 
+> Abaixo estão os detalhes de cada camada e um exemplo de pipeline prático:
+> 1. Camada Bronze (Ingestão / Dados Brutos)
+> Nesta camada inicial, os dados chegam de várias fontes (em streaming ou em lote/batch) e "pousam" no sistema exatamente em seus formatos e estados brutos originais. Quando convertidos para tabelas no formato Delta, é possível usar validações primárias de esquema para identificar se há registros inesperados, criando assim um histórico rápido e não modificado da fonte.
+>
+>    Exemplo de Pipeline Real: Imagine uma empresa que recebe milhares de arquivos JSON diários contendo logs de acesso a um site, armazenados num bucket do Amazon S3. Você pode configurar um pipeline usando a ferramenta Auto Loader, que detecta e ingere de forma incremental e tolerante a falhas os novos arquivos JSON que chegam. Os dados são carregados e salvos em uma Tabela Delta Bronze exatamente com as colunas originais, sem limpar nenhum registro ainda.
+>
+>2. Camada Silver (Limpeza / Transformação)
+>Na camada Silver, os dados brutos da camada Bronze são higienizados, validados, enriquecidos e integrados. O objetivo aqui é resolver inconsistências, criar padronização e fornecer uma base limpa que já pode ser usada diretamente por Cientistas de Dados para a construção de modelos de Machine Learning (ML).
+>
+>    Exemplo de Pipeline Real: Um pipeline escrito em PySpark (e possivelmente orquestrado via Lakeflow Jobs) que lê os logs de acesso da tabela Bronze. O código limpa os registros que vieram com valores nulos, padroniza os tipos de dados (por exemplo, converte uma string de tempo "2026-05-31T15:08" para o formato nativo TIMESTAMP) e aplica regras de qualidade de dados. Além disso, usando a instrução MERGE do Delta Lake, você pode fazer uma operação do tipo Slowly Changing Dimension (SCD) Tipo 2, onde o pipeline atualiza informações cadastrais de usuários mantendo as versões antigas com datas de vigência (effectiveDate, endDate), gravando esse resultado altamente unificado na Tabela Delta Silver.
+>
+>3. Camada Gold (Serviço / Agregação para Negócios)
+>A camada Gold serve os dados altamente refinados e agregados, que são perfeitamente estruturados e otimizados para responder a problemas específicos de negócios. Essa camada é montada para ter baixa latência em consultas realizadas por equipes de Business Intelligence (BI) e aplicativos de ponta.
+>
+>    Exemplo de Pipeline Real: Um pipeline em SQL onde analistas criam uma Visualização Materializada (Materialized View) ou uma Streaming Table agregada. O script SQL pode fazer um JOIN (cruzamento) entre uma tabela Silver de "Pedidos" e uma de "Clientes", contabilizando o volume diário de vendas por estado (GROUP BY state, order_date). Essa view materializada Gold servirá os dados limpos diretamente a ferramentas analíticas de terceiros (como Power BI ou Tableau) através de um SQL Warehouse autogerenciado, permitindo que as equipes de negócios construam painéis (dashboards) sem ter que reprocessar ou lidar com lógicas pesadas de transformação.
+
+
 ##### Contexto & Aprendizagem
+
+Resposta tecnicamente sólida e alinhada à visão Databricks. 
+O principal ponto de atenção: a Arquitetura Medallion é uma convenção lógica de organização de dados, não uma exigência tecnológica nem exclusividade do Delta Lake. Pode ser implementada com Iceberg, BigQuery, Snowflake ou até diretórios em S3. A resposta do NotebookLM, por refletir as fontes Databricks, tende a apresentar práticas comuns da plataforma como definições universais — o que são, na verdade, boas heurísticas, não regras arquiteturais obrigatórias:
+
+- Bronze não é obrigatoriamente "sem transformação" — metadados de ingestão (timestamp, origem, batch_id) ainda são Bronze
+- Silver não é exclusivamente para ML — depende da organização
+- Gold não é necessariamente agregada — tabelas dimensionais e fatos sem agregação são Gold igualmente
+
+O critério real da camada Gold é: pronta para consumo por um caso de negócio específico.
 
 ### Prompt 5 - Quais tópicos da documentação carregada têm maior peso na prova Databricks Data Engineer Associate? Organize por categoria.
 
+> Com base no guia oficial do exame fornecido na documentação, não há uma especificação exata do peso (porcentagem ou número de questões) para cada categoria na prova. A avaliação conta com 45 questões de múltipla escolha que cobrem todo o espectro das operações de engenharia de dados.
+> Abaixo estão os tópicos cobrados na prova, organizados exatamente pelas categorias delineadas no guia oficial:
+> 1. Databricks Intelligence Platform
+>
+>    Compreensão dos componentes centrais da plataforma, como arquitetura, Delta Lake e Unity Catalog.
+>    Serviços de computação: entendimento de características, limitações, modelos de custo e seleção da melhor opção para cada caso de uso.
+>
+> 2. Data Ingestion and Loading (Ingestão e Carregamento)
+>
+>    Padrões de ingestão (em lote/batch, streaming e cargas incrementais) a partir de arquivos locais ou através do Lakeflow Connect.
+>    Utilização do comando COPY INTO e do Auto Loader (incluindo evolução e imposição de esquema) para carregar dados em tabelas do Unity Catalog.
+>    Conexões via clientes REST e JDBC/ODBC, além do processamento de dados semiestruturados/não estruturados (como JSON).
+>    Saber priorizar o método correto de ingestão com base em volume, frequência e requisitos de governança.0
+>
+> 3. Data Transformation and Modeling (Transformação e Modelagem)
+>
+>    Limpeza de dados das tabelas Bronze usando PySpark/SQL, tratamento de nulos e padronização de tipos de dados rumo à camada Silver.
+>    Manipulação de DataFrames: junções (joins de diversos tipos), renomeação, filtros e explosão de arrays.
+>    Operações de agregação e deduplicação de dados.
+>    Ajuste de performance com parâmetros básicos, como spark.sql.shuffle.partitions e opções de memória.
+>    Criação de objetos da camada Gold, incluindo tabelas de streaming e visualizações materializadas (materialized views), com aplicação de regras de qualidade de dados.
+>
+> 4. Working with Lakeflow Jobs (Trabalhando com Jobs)
+>
+>    Orquestração de pipelines e fluxos de controle usando tarefas condicionais (ramificações/loops) e retentativas em grafos baseados em DAG.
+>    Configuração de dependências entre tarefas comuns (notebooks, SQL, dashboards).
+>    Definição de gatilhos (triggers) baseados em tempo ou orientados a dados (ex: chegada de arquivos, atualização de tabelas).
+>
+> 5. Implementing CI/CD (Implementação de CI/CD)
+>
+>    Gerenciamento do fluxo de código (criação de branches, commits, pull requests) diretamente pelos Databricks Git Folders.
+>    Utilização e implantação de Declarative Automation Bundles (antigos Asset Bundles) para promover recursos (jobs, pipelines) entre ambientes (dev, test, prod).
+>    Uso da Databricks CLI em fluxos de CI/CD.
+>
+> 6. Troubleshooting, Monitoring, and Optimization (Solução de Problemas, Monitoramento e Otimização)
+>
+>    Monitoramento de saúde e tempo de execução de pipelines usando a interface do Lakeflow Jobs.
+>    Identificação de gargalos de performance na Spark UI, como inclinação de dados (data skew), embaralhamento (shuffling) e despejo em disco (disk spilling).
+>    Diagnóstico de problemas de inicialização de clusters, conflitos de bibliotecas e erros de falta de memória (OOM).
+>    Compreensão de recursos de otimização preditiva e Liquid Clustering.
+>
+> 7. Governance and Security (Governança e Segurança)
+>
+>    Diferenciação e operações (criar, modificar, converter) entre tabelas gerenciadas (managed) e externas (external) no Unity Catalog.
+>    Configuração de controle de acessos em hierarquias de segurança usando comandos SQL como GRANT, REVOKE e DENY.
+>    Controle centralizado para dados sensíveis utilizando políticas de mascaramento de colunas (column-level masking) e filtragem em nível de linha (row-level security) no Unity Catalog.
+
 ##### Contexto & Aprendizagem
+Esta foi a primeira pergunta onde a limitação estava nas fontes, não no NotebookLM: o guia oficial (fonte 5) lista as categorias do exame mas não publica a distribuição de questões por tópico — e a resposta refletiu isso fielmente, reproduzindo as categorias sem ponderá-las.
+
+A validação com o ChatGPT gerou uma priorização em tiers que vai além das fontes carregadas — útil como orientação de estudo, mas não verificável, já que o modelo não citou as bases para a hierarquia sugerida.
+
+Priorização sugerida para o estudo:
+
+- Tier 1 (altíssima prioridade): Delta Lake (ACID, Time Travel, MERGE, schema), Medallion, Auto Loader / COPY INTO, DataFrames e Spark SQL
+- Tier 2: Unity Catalog (managed vs external, permissões), Streaming
+- Tier 3: Lakeflow Jobs, DAGs, Monitoramento / Spark UI
+- Tier 4 (menor peso no Associate): CI/CD, Bundles, Liquid Clustering
+
+Nota: os tópicos de Delta Lake e Transaction Log já foram cobertos nos Prompts 3 e 4 em nível acima do exigido pelo Associate — o gap de estudo está em Spark SQL prático, Auto Loader e Unity Catalog.
 
 ---
 
