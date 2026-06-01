@@ -13,6 +13,20 @@
 
 ---
 
+## Metodologia de Validação
+
+O foco deste projeto não foi apenas extrair respostas do NotebookLM, mas avaliar sua confiabilidade como ferramenta de estudo. Para isso, adotamos um fluxo de validação cruzada entre modelos:
+
+1. **Pergunta ao NotebookLM** — com base nas fontes curadas
+2. **Verificação das fontes citadas** — checando se a resposta reflete o conteúdo real das fontes ou extrapola
+3. **Comparação com ChatGPT** — para identificar divergências, vieses e lacunas
+4. **Revisão técnica com Claude** — para filtrar pedantismo e distinguir detalhes irrelevantes de correções legítimas
+5. **Consolidação do aprendizado** — registrado no Contexto & Aprendizagem de cada teste
+
+**Objetivo:** reduzir alucinações, identificar vieses de fonte e distinguir erros factuais de diferenças de perspectiva.
+
+---
+
 ## Curadoria de Fontes
 
 Fontes selecionadas e carregadas no NotebookLM:
@@ -31,7 +45,7 @@ Fontes selecionadas e carregadas no NotebookLM:
 
 ---
 
-## Engenharia de Prompts e Cicatrizes
+## Testes e Cicatrizes
 
 ### Prompt 1 - Qual a mensagem do erro 0A000?
 > As fontes fornecidas não contêm a mensagem específica para o erro 0A000. O material disponível apenas lista "Error Conditions" (Condições de Erro) no índice do guia do Spark SQL, mas não detalha os códigos de erro ou suas respectivas mensagens, focando apenas em uma introdução geral sobre Spark SQL, DataFrames e Datasets.
