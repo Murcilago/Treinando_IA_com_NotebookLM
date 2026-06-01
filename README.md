@@ -224,10 +224,6 @@ O NotebookLM foi transparente ao sinalizar explicitamente quais informações vi
 
 A validação com o ChatGPT (8,5/10) apontou uma correção importante: o critério de escolha entre All-Purpose e Job Cluster **não é custo**, mas sim o tipo de uso — **interativo vs. automatizado**. Custo é consequência, não critério. Essa é a distinção que a prova cobra.
 
-Pegadinhas frequentes identificadas:
-- *"Pipeline ETL roda às 2h da manhã sem interação humana — qual cluster?"* → **Job Cluster**
-- *"Qual trigger usar quando um arquivo chega ao storage?"* → **Data-driven trigger**
-
 ### Prompt 7 - Explique o Auto Loader e o Delta Live Tables (DLT) e como se relacionam.
 
 > **1. Auto Loader**
@@ -265,12 +261,6 @@ Dois pontos que merecem destaque para a prova:
 
 - **Exactly-once é uma simplificação:** o Auto Loader por si só não garante semântica exactly-once — ela resulta da combinação com o Structured Streaming e o Delta Lake. Para o nível Associate a simplificação é aceitável, mas vale saber a nuance.
 - **Expectations têm três modos (Warn / Drop / Fail):** a resposta definiu o conceito corretamente mas não explicitou os modos — que são exatamente o que a prova costuma cobrar.
-
-Pegadinhas frequentes identificadas:
-- *"Chegam milhares de JSONs por minuto com schema variável — qual solução?"* → **Auto Loader com Schema Evolution**
-- *"Você quer bloquear registros com valores inválidos no pipeline — qual recurso?"* → **Expectation**
-- *"Você quer processar apenas novos eventos conforme chegam — qual objeto DLT?"* → **Streaming Table**
-- *"Você quer disponibilizar agregações para dashboards — qual objeto DLT?"* → **Materialized View**
 
 ---
 
