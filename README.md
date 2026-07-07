@@ -324,25 +324,20 @@ Dois pontos que merecem destaque para a prova:
 
 ---
 
-### Glossário
+# Glossário: Consumo Consciente
 
-| Conceito | Definição |
-|----------|-----------|
-| Lakehouse | Arquitetura que combina a flexibilidade de um Data Lake com as garantias de um Data Warehouse |
-| Delta Lake | Camada de armazenamento open-source que adiciona ACID transactions sobre arquivos Parquet |
-| Delta Table | Tabela gerenciada pelo Delta Lake, com transaction log associado |
-| Transaction Log (`_delta_log`) | Diretório de metadados que registra cada operação na Delta Table em arquivos JSON |
-| ACID | Atomicity, Consistency, Isolation, Durability — garantias de integridade transacional |
-| Time Travel | Recurso que permite consultar versões históricas de uma Delta Table por versão ou timestamp |
-| Schema Enforcement | Rejeita gravações que não respeitam o schema definido na tabela |
-| Schema Evolution | Permite alterações no schema (ex: adição de colunas) de forma controlada |
-| Medallion Architecture | Padrão de camadas Bronze (raw), Silver (limpo) e Gold (pronto para consumo por caso de negócio específico) |
-| Auto Loader | Ferramenta do Databricks para ingestão incremental e automática de arquivos em cloud storage |
-| Delta Live Tables (DLT) | Framework declarativo do Databricks para pipelines de dados com qualidade e orquestração nativa |
-| Unity Catalog | Solução de governança centralizada de dados e IA no Databricks |
-| Databricks Runtime | Ambiente de execução baseado em Apache Spark, otimizado para o Databricks |
-| Job | Unidade de agendamento e orquestração de notebooks ou scripts no Databricks |
-| Cluster | Conjunto de máquinas virtuais que executam workloads Spark no Databricks |
+| Termo | Definição |
+| :--- | :--- |
+| **Consumo Consciente** | Postura de vida que envolve reflexão constante, buscando o equilíbrio entre os efeitos sociais, financeiros, as possibilidades ambientais e a satisfação pessoal em cada decisão de compra. |
+| **Consumismo** | Prática induzida pela sociedade atual onde o consumo de produtos é visto como sinônimo de felicidade, resultando na busca insaciável por "bem-estar" através do poder aquisitivo, muitas vezes sem necessidade real. |
+| **Consumo Sustentável** | Ato de consumir utilizando recursos naturais de forma a satisfazer as necessidades da geração atual sem comprometer a capacidade das gerações futuras de suprirem suas próprias necessidades. |
+| **5 Rs da Sustentabilidade** | Diretrizes ordenadas para orientar o comportamento: **Repensar** (hábitos), **Recusar** (produtos danosos), **Reduzir** (desperdício), **Reutilizar** (objetos) e **Reciclar** (como última etapa). |
+| **Greenwashing** | Tipo de propaganda ambiental enganosa onde empresas omitem informações negativas ou "mascaram" problemas com discursos ecológicos sem implementar iniciativas reais de sustentabilidade. |
+| **Pegada Ecológica** | Metodologia que mede quanto da capacidade regenerativa do planeta é utilizada para sustentar o estilo de vida e o consumo de um indivíduo ou população. |
+| **Ciclo de Vida do Produto** | Análise completa de um item "do berço ao túmulo", abrangendo desde a extração da matéria-prima, produção e distribuição até o seu descarte ou destinação final. |
+| **Obsolescência Programada** | Estratégia de fabricantes para forçar a compra de novos produtos ao reduzir artificialmente a vida útil de um item, independentemente de seu bom estado de funcionamento. |
+| **Reciclagem** | Processo de transformação de materiais descartados em nova matéria-prima para retornarem ao ciclo produtivo. Deve ser encarada como o último recurso após a redução e o reuso. |
+| **Economia Circular** | Modelo produtivo que imita os ciclos da natureza ("nada se perde, tudo se transforma"), promovendo a reinserção contínua de resíduos e materiais no mercado. |
 
 ---
 
