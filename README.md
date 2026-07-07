@@ -2,7 +2,7 @@
 
 ## Contexto e Objetivos
 
-**Assunto escolhido:** Fundamentos do Databricks e Delta Lake com foco na certificação **Databricks Certified Data Engineer Associate**.
+**Assunto escolhido:** Conceitos e análise de consumo consciente na sociedade contemporanea, aplicabilidade e subjetividade.
 
 **Objetivos de estudo:**
 - Compreender a arquitetura Lakehouse e como ela se diferencia de Data Warehouses e Data Lakes tradicionais
