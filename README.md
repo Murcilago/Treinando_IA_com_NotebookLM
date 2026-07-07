@@ -1,29 +1,27 @@
-# Miniguia de Estudos com NotebookLM — Databricks & Delta Lake
+# Guia Prático do Consumo Consciente.
 
 ## Contexto e Objetivos
 
 **Assunto escolhido:** Conceitos e análise de consumo consciente na sociedade contemporanea, aplicabilidade e subjetividade.
 
 **Objetivos de estudo:**
-- Compreender a arquitetura Lakehouse e como ela se diferencia de Data Warehouses e Data Lakes tradicionais
-- Dominar os conceitos de Delta Lake: ACID transactions, Time Travel, schema enforcement e schema evolution
-- Entender o fluxo de dados na arquitetura Medallion (Bronze → Silver → Gold)
-- Conhecer os principais recursos do Databricks: clusters, jobs, notebooks, Auto Loader e Delta Live Tables
-- Construir base sólida de conhecimento para a prova de certificação Data Engineer Associate
+- Explorar o conceito, as bases e histórico do consumo consciente
+- Analisar as áreas de abordagem e aplicabilidade do conceito.
+- Entender os impactos empequena e em larga escala social.
+- Estender o conceito a profundidade subjetiva do tema e dentro do modelo capitalista vigente.
 
 ---
 
 ## Metodologia de Validação
 
-O foco deste projeto não foi apenas extrair respostas do NotebookLM, mas avaliar sua confiabilidade como ferramenta de estudo. Para isso, adotamos um fluxo de validação cruzada entre modelos:
+Usando de metodo de comparação, abordando conceitos simples para comparação de respostas, junto a outros modelos de IA, assim como interpretação em cima de referencias cruzadas e aprofundamento:
 
-1. **Pergunta ao NotebookLM** — com base nas fontes curadas
-2. **Verificação das fontes citadas** — checando se a resposta reflete o conteúdo real das fontes ou extrapola
-3. **Comparação com ChatGPT** — para identificar divergências, vieses e lacunas
-4. **Revisão técnica com Claude** — para filtrar pedantismo e distinguir detalhes irrelevantes de correções legítimas
-5. **Consolidação do aprendizado** — registrado no Contexto & Aprendizagem de cada teste
+1. **Pergunta ao NotebookLM** — com base nas fontes curadas.
+2. **Verificação das fontes citadas** — checando as respostas para comparação.
+3. **Comparação com IAs vigentes** — para análise de conceitos solicitados.
+5. **Consolidação do resultado** — registrado no Contexto & Aprendizagem de cada teste
 
-**Objetivo:** reduzir alucinações, identificar vieses de fonte e distinguir erros factuais de diferenças de perspectiva.
+**Objetivo:** Identificar a precisão nas respostas conceituais e a precisão na subjetividade em respostas cruzadas interpretativas.
 
 ---
 
@@ -33,15 +31,11 @@ Fontes selecionadas e carregadas no NotebookLM:
 
 | # | Título | Tipo | Link | Processado com * | 
 |---|--------|------|------|----------------|
-| 1 | Databricks Documentation — Data Engineering | PDF** | https://docs.databricks.com/en/introduction/index.html | Mr. Crawley --depth 1 (mai/2026) |
-| 2 | Delta Lake Documentation Oficial | PDF** | https://docs.delta.io/latest/index.html | Mr. Crawley --depth 1 (mai/2026) |
-| 3 | Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores (paper original) | PDF | https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf | Download direto (mai/2026) |
-| 4 | Apache Spark — Spark SQL, DataFrames and Datasets Guide | PDF** | https://spark.apache.org/docs/latest/sql-programming-guide.html | Mr. Crawley --depth 1 (mai/2026) |
-| 5 | Databricks Certified Data Engineer Associate — Exam Guide | PDF | https://www.databricks.com/sites/default/files/2026-05/databricks-certified-data-engineer-associate-exam-guide-may-2026.pdf | Download direto (mai/2026) |
-
-\* Durante a curadoria foi observada a necessidade de um webcrawler para páginas com links. Detalhes no primeiro prompt.
-
-\*\* Sites consolidados em html com Mr. Crawley e convertidos para PDF.  
+| 1 | Manual de Educação para o Consumo Sustentável | PDF** | https://www.idec.org.br/uploads/publicacoes/publicacoes/Manual_completo.pdf | Download Direto |
+| 2 | Guia do Consumidor Consciente | PDF** | https://www.migalhas.com.br/arquivos/2020/11/c3db984950f729_oab-sp-ebook-guia-do-consumo-c.pdf | Download Direto |
+| 3 | Consumo Sustentável: Uma Questão de Todos: Material educativo que ensina a recusar produtos piratas, combater o desperdício e reduzir os impactos individuais. | PDF | https://www.ced.seduc.ce.gov.br/wp-content/uploads/sites/82/2023/07/uma-questao-de-todos.pdf | Download Direto |
+| 4 | Veja Como Enxergar o Consumo Consciente Para Potencializar Seus Negócios | PDF** | https://bibliotecas.sebrae.com.br/chronus/ARQUIVOS_CHRONUS/bds/bds.nsf/9ebef54d2c64457aff4b94271ba22553/$File/30695.pdf | Download Direto |
+| 5 | Cartilha de Consumo Consciente | PDF | https://piracicaba.sp.gov.br/wp-content/uploads/2025/02/Cartilha-consumo-consciente.pdf | Download direto |
 
 ---
 
