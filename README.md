@@ -285,7 +285,7 @@ Dois pontos que merecem destaque para a prova:
 *    Componente Essencial - Governança Unificada: O Unity Catalog atua como o pilar de segurança do Lakehouse, fornecendo uma solução unificada de governança com controle de acesso refinado (granular), auditoria, rastreamento de linhagem de dados e descoberta de ativos de dados e IA em todos os workspaces.
 *    Padrão de Design (Medallion Architecture): O Lakehouse utiliza tipicamente a Arquitetura Medalhão (composta pelas camadas Bronze, Prata e Ouro), estruturando os dados de forma que eles sejam ingeridos brutos, progressivamente limpos, validados, enriquecidos e, por fim, agregados para o consumo final do negócio.
 
-#### Tópico 2: Delta Lake — ACID, Time Travel e Schema
+#### tste teste
 
 *    Fundamento do Delta Lake: É a camada de armazenamento otimizada e o formato padrão no Databricks. Ele estende arquivos de dados abertos Apache Parquet adicionando um log de transações (transaction log) que rastreia os metadados de forma escalável.
 *    Transações ACID: O Delta Lake utiliza controle de concorrência otimista e garante o nível de isolamento serializável para as operações. Isso permite a unificação confiável de cargas de trabalho em lote (batch) e fluxo contínuo (streaming), garantindo que leitores concorrentes nunca visualizem dados inconsistentes em caso de gravação parcial ou falha.
