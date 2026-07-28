@@ -210,51 +210,36 @@ A análise feita mostra mais um resposta alinhada e completa, com base no materi
 
 ### Resumos Estruturados
 
-#### Tópico 1: Arquitetura Lakehouse
-
-*    O que é: Um sistema de gerenciamento de dados que une o melhor de dois mundos, combinando os benefícios de escalabilidade, flexibilidade e baixo custo dos Data Lakes com a confiabilidade, estruturação e performance de consultas dos Data Warehouses.
-*    Por que foi criado: Para unificar e acelerar soluções de dados, estabelecendo uma plataforma única com acesso direto a formatos de dados abertos padrão (como Parquet), aliando isso a protocolos de indexação para apoiar simultaneamente equipes de BI (Business Intelligence), engenharia e ciência de dados/ML.
-*    Quais problemas resolve: Elimina os "silos de dados" isolados e a necessidade de duplicar dados entre sistemas diferentes para diversas cargas de trabalho. Com isso, reduz custos redundantes, garante uma "única fonte da verdade" (single source of truth) e resolve as falhas de consistência (falta de transações ACID) inerentes aos sistemas básicos de armazenamento em nuvem.
-*    Componente Essencial - Motor e Armazenamento Otimizado: A arquitetura no Databricks é construída sobre o Apache Spark (motor de processamento distribuído, massivamente escalável) e o Delta Lake (camada de armazenamento otimizada que garante transações ACID, cumprimento de esquema e manipulação eficiente de metadados sobre arquivos na nuvem).
-*    Componente Essencial - Governança Unificada: O Unity Catalog atua como o pilar de segurança do Lakehouse, fornecendo uma solução unificada de governança com controle de acesso refinado (granular), auditoria, rastreamento de linhagem de dados e descoberta de ativos de dados e IA em todos os workspaces.
-*    Padrão de Design (Medallion Architecture): O Lakehouse utiliza tipicamente a Arquitetura Medalhão (composta pelas camadas Bronze, Prata e Ouro), estruturando os dados de forma que eles sejam ingeridos brutos, progressivamente limpos, validados, enriquecidos e, por fim, agregados para o consumo final do negócio.
-
-#### tste teste
-
-*    Fundamento do Delta Lake: É a camada de armazenamento otimizada e o formato padrão no Databricks. Ele estende arquivos de dados abertos Apache Parquet adicionando um log de transações (transaction log) que rastreia os metadados de forma escalável.
-*    Transações ACID: O Delta Lake utiliza controle de concorrência otimista e garante o nível de isolamento serializável para as operações. Isso permite a unificação confiável de cargas de trabalho em lote (batch) e fluxo contínuo (streaming), garantindo que leitores concorrentes nunca visualizem dados inconsistentes em caso de gravação parcial ou falha.
-*    Time Travel (Viagem no Tempo): Permite acessar snapshots (versões do estado exato) anteriores de uma tabela. É executado através da sintaxe SQL VERSION AS OF <versão> ou TIMESTAMP AS OF <data_hora>. É utilizado principalmente para reverter modificações ou deleções acidentais (rollbacks), auditoria e para reprodutibilidade de modelos de Machine Learning.
-*    Retenção e Time Travel: Para viajar no tempo, tanto o log quanto os arquivos Parquet antigos devem estar disponíveis. O histórico do log é mantido por 30 dias por padrão (configurável via delta.logRetentionDuration), desde que os arquivos de dados subjacentes não tenham sido apagados permanentemente pelo comando de limpeza VACUUM.
-*    Schema Enforcement (Imposição de Esquema): O Delta adota um modelo rígido de validação na gravação (schema-on-write). Ele rejeita automaticamente transações que tentem inserir colunas inexistentes ou com tipos de dados incompatíveis com o esquema da tabela destino, impedindo a injeção de dados de má qualidade (bad records) no Data Lake.
-*    Schema Evolution (Evolução Automática de Esquema): O esquema de uma tabela pode evoluir automaticamente para acomodar novos dados. Durante a gravação (append ou overwrite), basta utilizar a opção .option("mergeSchema", "true") na API do DataFrame para que as novas colunas originadas da fonte sejam assimiladas dinamicamente à estrutura da tabela.
-*    Evolução Explícita (DDL) e Column Mapping: A evolução estrutural também pode ser feita explicitamente com comandos como ALTER TABLE (para adicionar ou reordenar colunas). Operações destrutivas ou de renomeação, como excluir (DROP) ou renomear (RENAME) colunas, só podem ser executadas como operações rápidas apenas de metadados — sem a necessidade de reescrever fisicamente todos os arquivos Parquet afetados — se o recurso de Column Mapping estiver ativado na tabela
-
-#### Tópico 3: Arquitetura Medallion (Bronze / Silver / Gold)
-
-- **O que é:** Padrão de design de dados usado no Lakehouse para organizar e melhorar progressivamente a qualidade dos dados. É uma **convenção lógica**, não uma exigência tecnológica — pode ser implementada com Delta Lake, Iceberg, BigQuery ou até diretórios em S3.
-- **Camada Bronze (Ingestão):** Dados chegam de fontes diversas (streaming ou batch) e são armazenados próximos ao formato original, para rastreabilidade, auditoria e replay de pipelines. Metadados de ingestão (timestamp, origem, batch_id) são comuns e ainda pertencem à Bronze.
-- **Camada Silver (Limpeza / Transformação):** Dados higienizados, validados e integrados. Operações típicas: deduplicação, tratamento de nulos, padronização de tipos, joins, MERGE/SCD Tipo 2. Base confiável para consumo analítico e ciência de dados.
-- **Camada Gold (Consumo):** Dados prontos para um caso de negócio específico — dashboards de BI, KPIs, aplicações analíticas. Não é necessariamente agregada: tabelas dimensionais, fatos e Feature Stores também são Gold.
-- **Critério real da Gold:** pronta para consumo por um caso de negócio específico — não "agregada".
-- **Ferramentas Databricks associadas:** Auto Loader (ingestão Bronze), MERGE + PySpark (transformação Silver), Materialized Views e Streaming Tables (Gold).
-
-#### Tópico 4: Databricks — Clusters, Jobs e Auto Loader
-
-- **All-Purpose Cluster:** uso interativo, desenvolvimento, notebooks, múltiplos usuários simultâneos. Permanece ativo até encerramento manual.
-- **Job Cluster:** uso automatizado, pipelines ETL de produção. Provisionado no início do job e encerrado ao término. Critério de escolha: **interativo vs. automatizado** — não custo.
-- **Lakeflow Jobs:** orquestra pipelines via DAG. Suporta tarefas de Notebook, SQL, Python, Dashboard e Pipeline. Permite dependências entre tarefas, ramificações condicionais (if/else), loops (for each) e retentativas automáticas.
-- **Triggers:** *Time-based* (cronograma fixo) e *Data-driven* (file arrival ou table update).
-- **Auto Loader:** ingestão incremental de arquivos de cloud storage via Structured Streaming (`cloudFiles`). Dois modos: *Directory Listing* (padrão) e *File Notification* (eventos — melhor para grandes volumes).
-- **Auto Loader vs. COPY INTO:** Auto Loader para alta escala, streaming e schema evolution; COPY INTO para cargas batch menores e execução ocasional.
-
-#### Tópico 5: Delta Live Tables (DLT) — Lakeflow Spark Declarative Pipelines
-
-- **O que é:** Framework declarativo (SQL e Python) para pipelines de dados. Você define *o que* transformar; o framework gerencia dependências, infraestrutura e tratamento de erros automaticamente.
-- **Streaming Table:** processa incrementalmente apenas novos dados via streaming. Ideal para camada Bronze. Criada com modificador `STREAM`.
-- **Materialized View:** visualização pré-computada que reflete o estado atual dos dados, recalculando resultados e agregações. Ideal para camada Gold.
-- **Expectations:** regras de qualidade de dados aplicadas no pipeline. Três modos: *Warn* (registra e mantém), *Drop* (descarta o registro), *Fail* (interrompe o pipeline).
-- **Integração com Auto Loader:** dentro de pipelines DLT, o Auto Loader é a porta de entrada recomendada para cloud storage. O framework gerencia checkpoints automaticamente — sem configuração manual.
-- **Fluxo de referência:** `Storage → Auto Loader → Streaming Table (Bronze) → Transformações (Silver) → Materialized View (Gold)`
+#### Tópico 1: Fundamentos e Relevância do Consumo Consciente
+* O consumo consciente é definido como uma postura de vida fundamentada na reflexão constante sobre os processos de compra, buscando equilibrar a satisfação pessoal com os impactos sociais, financeiros e ambientais.
+* Sua prática tornou-se uma questão emergencial devido ao cenário global de aquecimento climático, extinção de espécies e exploração desenfreada de recursos.
+* Atualmente, a humanidade consome cerca de 74% mais recursos do que o planeta é capaz de regenerar, tornando a mudança de hábitos uma necessidade de sobrevivência para as gerações presentes e futuras.
+>
+#### Tópico 2: A Diferença entre Consumo e Consumismo e o Peso das Mídias
+* É vital distinguir o consumo (uso de bens para satisfazer necessidades reais) do consumismo (ato impulsivo de gastar sem necessidade, visando apenas prazer imediato ou status).
+* Influência Psicológica: A publicidade explora vulnerabilidades como vaidade e insegurança para criar "falsas necessidades".
+* Redes Sociais: Funcionam como "vitrines de pessoas", onde o próprio usuário é transformado em mercadoria e monitorado por algoritmos que incentivam o desejo incessante de posse.
+>
+#### Tópico 3: Diretrizes Práticas: Os 5 Rs e o Ciclo de Vida do Produto
+* A estratégia para uma vida sustentável baseia-se na hierarquia dos 5 Rs da Sustentabilidade:
+* Repensar: hábitos e necessidades antes de comprar.
+* Recusar: produtos que agridam o meio ambiente ou a saúde.
+* Reduzir: o volume de compras e o desperdício de recursos.
+* Reutilizar: dar novos usos a embalagens e objetos antes de descartá-los.
+* Reciclar: deve ser encarado como a última etapa, aplicada apenas ao que não pôde ser evitado.
+* Análise do Ciclo de Vida (ACV): Consumir conscientemente exige olhar o produto "do berço ao túmulo", considerando o impacto desde a extração da matéria-prima até o descarte final.
+>
+#### Tópico 4: Impactos Ambientais: Água, Energia e Resíduos
+* Pequenas mudanças domésticas geram grandes impactos coletivos no manejo de recursos finitos:
+* Água: Além de reduzir o tempo de banho e fechar torneiras, é preciso entender a "água virtual", que é o volume invisível utilizado na produção de itens como carne e roupas.
+* Energia: Recomenda-se o uso de aparelhos com Selo Procel (categoria A), lâmpadas LED e a retirada de aparelhos em modo standby, que pode consumir até 20% da energia do equipamento.
+* Reciclagem: Embora essencial, é insuficiente sozinha; no Brasil, as taxas de reciclagem de materiais como o plástico são extremamente baixas (apenas 1,28%), reforçando que a prioridade deve ser a não geração de resíduos.
+>
+#### Tópico 6: Os Agentes de Mudança e a Cidadania Ativa
+* A transformação da sociedade de consumo exige um esforço compartilhado entre três pilares:
+* Indivíduo: O consumidor é o principal agente, pois sua escolha no mercado funciona como um "ato político" que pressiona a indústria.
+* Indústria: Deve assumir a responsabilidade pela logística reversa, adotar a economia circular e combater o greenwashing (propaganda enganosa de sustentabilidade).
+* Estado: Responsável por criar políticas públicas eficazes e fiscalizar o cumprimento das leis ambientais, alinhando-se aos Objetivos de Desenvolvimento Sustentável (ODS) da ONU, especialmente o ODS 12 (Consumo e Produção Responsáveis).
 
 ---
 
@@ -278,21 +263,21 @@ A análise feita mostra mais um resposta alinhada e completa, com base no materi
 ### Prompts Reutilizáveis para Revisão
 
 ```
-1. "Resuma os pontos principais sobre [tópico] em até 5 tópicos objetivos, com base nas fontes carregadas."
+1. "liste todos os conceitos sobre o [tópico] dentro das base nas fontes carregadas."
 ```
 
 ```
-2. "Quais são as principais diferenças entre [conceito A] e [conceito B]? Inclua quando usar cada um."
+2. "O conceito aqui proposto possui uma plaicabilidade na sociedade atual, dentro de uma possiblidade social?"
 ```
 
 ```
-3. "Crie 10 perguntas no estilo da prova Databricks Data Engineer Associate sobre [tópico], com gabarito comentado."
+3. "Estruture todas as respotas dentro de um resumo organizado em cinco tópicos"
 ```
 
 ```
-4. "Explique [conceito] como se eu fosse um engenheiro de dados vindo de SQL tradicional, sem experiência com Spark."
+4. "Existe efetividade na aplicabilidade do conceito aqui estabelecido, dentro das fontes, ou é somente um aprimoramento individual?"
 ```
 
 ```
-5. "Liste os erros mais comuns de iniciantes ao trabalhar com [Delta Lake / DLT / Auto Loader] e como evitá-los."
+5. "POssuimnos exemplos efetivos de aplicação do conceito aqui exposto, que tenha sortido efeito significativo?"
 ```
