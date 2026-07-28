@@ -41,28 +41,34 @@ Fontes selecionadas e carregadas no NotebookLM:
 
 ## Testes e Cicatrizes
 
-### Prompt 1 - Qual a mensagem do erro 0A000?
-> As fontes fornecidas não contêm a mensagem específica para o erro 0A000. O material disponível apenas lista "Error Conditions" (Condições de Erro) no índice do guia do Spark SQL, mas não detalha os códigos de erro ou suas respectivas mensagens, focando apenas em uma introdução geral sobre Spark SQL, DataFrames e Datasets.
+### Prompt 1 - O que é consumo consciente, sua relevância na sociedade atual e onde ele pode ser visto em nossa rotina?
+> O consumo consciente é definido como uma postura de vida que envolve reflexão constante sobre os processos de compra.
+Ele propõe que cada decisão de adquirir um produto ou serviço seja equilibrada entre os impactos sociais, financeiros, ambientais e a satisfação pessoal do indivíduo. 
+> Ser um consumidor consciente vai além de apenas evitar o desperdício; envolve pesquisar a ética das empresas fornecedoras e boicotar aquelas que utilizam práticas ilegais ou danosas, como o trabalho análogo à escravidão ou testes em animais.
+> Relevância na Sociedade Atual
+A prática do consumo consciente tornou-se uma questão emergencial devido ao atual cenário de aquecimento global, extinção de espécies e exploração desenfreada de recursos naturais.
+Sua relevância é sustentada por diversos fatores:
+> Esgotamento do Planeta: Atualmente, a humanidade consome anualmente cerca de 74% mais recursos naturais do que a Terra é capaz de regenerar.
+Justiça Intergeracional: O objetivo é garantir que as necessidades das gerações atuais sejam atendidas sem comprometer a capacidade das gerações futuras de suprirem suas próprias necessidades.
+Responsabilidade Compartilhada: Reconhece que a solução para a crise ambiental não depende apenas do Estado ou das empresas, mas de um esforço coletivo onde o consumidor assume seu papel como agente de mudança.
+Poder Político do Consumo: O ato de consumir é visto como um ato político, onde as escolhas de mercado pressionam as indústrias a adotarem processos produtivos mais éticos e sustentáveis.
+Onde ele pode ser visto em nossa rotina?
+>
+> O consumo consciente manifesta-se em pequenos hábitos cotidianos que buscam a eficiência e a redução de impactos:
+Planejamento de Compras: Uso de listas de compras para evitar aquisições por impulso e a reflexão sobre a real necessidade de um produto antes da compra.
+Eficiência Energética: Apagar luzes em ambientes vazios, utilizar lâmpadas LED e dar preferência a aparelhos com o Selo Procel (categoria A).
+Economia de Água: Reduzir o tempo de banho, fechar a torneira ao escovar os dentes e utilizar máquinas de lavar apenas em sua capacidade total.
+Gestão de Alimentos e Resíduos: Preferir alimentos orgânicos e de produtores locais, praticar o aproveitamento integral dos alimentos e a compostagem de resíduos orgânicos.
+Redução de Plásticos: Substituir sacolas plásticas por ecobags (reutilizáveis), optar por produtos com menos embalagens ou que possuam o sistema de refil.
+Mobilidade Sustentável: Optar por transporte público, bicicleta, caminhada ou caronas solidárias para reduzir a emissão de gases de efeito estufa.
+Cidadania Ativa: Participar de audiências públicas, conselhos municipais e fóruns para influenciar políticas públicas relacionadas ao meio ambiente e à gestão de recursos.
+>
 #### Contexto & Aprendizagem
-A pergunta foi feita após colocar apenas a fonte (4). Como se trata de uma página com links para o conteúdo relevante e o notebooklm não faz webcrawling automático apenas o conteúdo imediatamente disponível no link é utilizado.
-Uma solução viável seria fazer um webcrawler em python definindo um nível razoável de profundidade de download de páginas. Devido ao limite de fontes do notebooklm, como uma pesquisa poderia levar a vários arquivos, optou-se por gerar resultados em um único arquivo html para a url primária pesquisada. Veja mais em [Mr. Crawley](tools/README.md)
+Diante da natureza do tema escolhido, as respostas podem variar em seu detalhamento e reflexão, porem nao podem ter seu core muito distante de uma resposta global, a resposta esta completa e extensa, e foi completada com exemplificações dentro de aspectos estudados da natureza do tema, o conceito em si foi validado pelo segundo modelo (chat gpt), pórem a resposta do NotebookLM foi muito mais completa e abrangente, trazendo sua capacidade de análise do tema quando suas fontes tem foco específico.
 
-Após gerar um pdf, baixando o conteúdo das páginas com profundidade de links=1, e trocando a fonte no notebooklm do link (4) para o pdf consolidado, obtemos - após um tempo consideravelmente maior de loading dado o tamanho da referência - a resposta:
-> No Spark SQL, o código 0A000 não se refere a uma única mensagem de erro, mas sim a um SQLSTATE (estado de erro) genérico que agrupa uma grande variedade de condições e subcondições de erro. Na prática, este código é utilizado para categorizar operações, tipos ou recursos que não são suportados pelo Spark (equivalente à classe de erro de "Feature Not Supported" no padrão SQL).
->
-> A mensagem exata exibida no console dependerá da operação específica que falhou. Aqui estão algumas das principais mensagens e subcondições que acionam o erro 0A000:
->
->    CANNOT_INVOKE_IN_TRANSFORMATIONS: "Dataset transformations and actions can only be invoked by the driver, not inside of other Dataset transformations" (Transformações e ações de Dataset só podem ser invocadas pelo driver, e não dentro de outras transformações de Dataset).
->    CONCURRENT_QUERY: "Another instance of this query was just started by a concurrent session." (Outra instância desta consulta acabou de ser iniciada por uma sessão simultânea).
->    DATATYPE_CANNOT_ORDER: "Type <dataType> does not support ordered operations." (O tipo de dado especificado não suporta operações de ordenação).
->    DISTINCT_WINDOW_FUNCTION_UNSUPPORTED: "Distinct window functions are not supported." (Funções de janela com a cláusula DISTINCT não são suportadas).
->    CANNOT_UPDATE_FIELD: Ocorre quando se tenta atualizar diretamente um campo cujo tipo de dado não suporta a operação direta, como estruturas aninhadas (ARRAY, MAP, STRUCT ou INTERVAL).
->    UNSUPPORTED_DATATYPE: "Unsupported data type <typeName>." (O tipo de dado não é suportado).
->    UNSUPPORTED_JOIN_TYPE: "Unsupported join type <typ>." (O tipo de junção (JOIN) exigido não é suportado pelo Spark).
->    UNSUPPORTED_SAVE_MODE: "The save mode <saveMode> is not supported for: an existent/non-existent path." (O modo de salvamento utilizado não é suportado para caminhos já existentes ou inexistentes).
->    NOT_SUPPORTED_COMMAND_WITHOUT_HIVE_SUPPORT: O comando não é suportado a menos que o suporte ao Hive seja ativado através da configuração "spark.sql.catalogImplementation" para "hive".
->
-> Como resolver: Como o código 0A000 abrange uma ampla gama de funcionalidades não suportadas, a forma correta de diagnosticar o erro é observar a subcondição que acompanha o código de estado na sua mensagem de erro (por exemplo, #UNSUPPORTED_DATATYPE ou #CANNOT_UPDATE_FIELD) e corrigir a lógica da sua consulta ou código de acordo com a limitação apontada pelo Spark.
+
+
+
 
 
 
