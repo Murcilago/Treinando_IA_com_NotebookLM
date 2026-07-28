@@ -149,7 +149,7 @@ Acesso 24/7: O smartphone faz com que o fornecedor esteja "na palma da mão" do 
 Em suma, a publicidade e as redes sociais movem a sociedade em direção à cultura do "ter" em detrimento do "ser", transformando o ato de comprar em uma forma de lazer e obrigação cívica, o que exige um esforço maior de reflexão por parte do consumidor consciente
 
 #### Contexto & Aprendizagem
-A resposta é satisfatória e alinha com o conteúdo alimentado, a resposta esta sempre em conformidade com o segundo modelo, porem sua profundidade e crítica traz exemlpos mais compostos. A análise dos parametros e terminologia do tema analisado estãod e acordo.
+A resposta é satisfatória e alinhada com o conteúdo alimentado, a resposta esta sempre em conformidade com o segundo modelo, porem sua profundidade e crítica traz exemlpos mais compostos. A análise dos parâmetros e terminologia do tema analisado estão de acordo.
 
 ### Prompt 5 - A reciclagem tem papel protagonista na sociedade atual ou é um mito?
 > Com base nos materiais, a reciclagem não é um mito, mas a ideia de que ela seja a solução protagonista e única para a crise ambiental é frequentemente questionada como uma visão reducionista e insuficiente.
@@ -184,7 +184,7 @@ Inclusão Social: A reciclagem gera renda para milhares de catadores, que são r
 
 #### Contexto & Aprendizagem
 A resposta traz análises e contrapontos, pois o conteudo possui mais pontos a serem analisados e conceitos críticos mais abstratos para análise.
-Dainte de uma pergunta que confronta pontos de análise mais aberta, o modelo mostrou seu pontoe ainda assim alinhado com a resposta mais coerente, o segnudo modelo valida a resposta e a direção do comentário.
+Diante de uma pergunta que confronta pontos de análise mais aberta, o modelo mostrou seu ponto e ainda assim alinhado com a resposta mais coerente, o segundo modelo valida a resposta e a direção do comentário.
 
 ### Prompt 6 - Dentro do cenario geral, onde podemos começar a corrigir o problema do consumo na sociedade moderna, o primeiro e principal agente?
 > Dentro do cenário geral apresentado pelas fontes, o primeiro e principal agente para começar a corrigir o problema do consumo é o indivíduo/consumidor. Embora a crise ambiental exija um esforço coletivo, as > transformações mais profundas devem começar pelo cotidiano e pelas ações individuais.
@@ -263,15 +263,15 @@ A análise feita mostra mais um resposta alinhada e completa, com base no materi
 ### Prompts Reutilizáveis para Revisão
 
 ```
-1. "liste todos os conceitos sobre o [tópico] dentro das base nas fontes carregadas."
+1. "Liste todos os conceitos sobre o [tópico] dentro das bases nas fontes carregadas."
 ```
 
 ```
-2. "O conceito aqui proposto possui uma plaicabilidade na sociedade atual, dentro de uma possiblidade social?"
+2. "O conceito aqui proposto possui uma aplicabilidade na sociedade atual, dentro de uma possiblidade social?"
 ```
 
 ```
-3. "Estruture todas as respotas dentro de um resumo organizado em cinco tópicos"
+3. "Estruture todas as respostas dentro de um resumo organizado em cinco tópicos"
 ```
 
 ```
@@ -279,5 +279,5 @@ A análise feita mostra mais um resposta alinhada e completa, com base no materi
 ```
 
 ```
-5. "POssuimnos exemplos efetivos de aplicação do conceito aqui exposto, que tenha sortido efeito significativo?"
+5. "Possuimnos exemplos efetivos de aplicação do conceito aqui exposto, que tenha sortido efeito significativo?"
 ```
