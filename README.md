@@ -121,172 +121,88 @@ Portanto, seus hábitos são a semente de uma revolução cultural necessária p
 #### Contexto & Aprendizagem
 A resposta é novamente satisfatória e traz o caracter de abertura pra reflexão com exemplificações, no cerne esta validado pelo segundo modelo (chat gpt), o qual sempre mesmo com prompts auxiliares, apresenta uma resposta mais global e curta, a resposta traz a abrangencia das fontes oferecidas.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Prompt 4 - Descreva a arquitetura Medallion (Bronze, Silver, Gold) e dê um exemplo de pipeline de dados real para cada camada.
-
-> A Arquitetura Medallion (Medalhão) é um padrão de design de dados utilizado no Data Lakehouse para organizar e melhorar progressivamente a qualidade dos dados à medida que eles fluem através de diferentes camadas lógicas. O objetivo desse padrão é estabelecer uma "única fonte da verdade" para a organização, servindo adequadamente tanto equipes de BI quanto de ciência de dados. 
-> Abaixo estão os detalhes de cada camada e um exemplo de pipeline prático:
-> 1. Camada Bronze (Ingestão / Dados Brutos)
-> Nesta camada inicial, os dados chegam de várias fontes (em streaming ou em lote/batch) e "pousam" no sistema exatamente em seus formatos e estados brutos originais. Quando convertidos para tabelas no formato Delta, é possível usar validações primárias de esquema para identificar se há registros inesperados, criando assim um histórico rápido e não modificado da fonte.
+### Prompt 4 - De que forma a publicidade e as redes sociais influenciam nossos hábitos de consumo?
+> A publicidade e as redes sociais exercem uma influência profunda e onipresente nos hábitos de consumo modernos, atuando muitas vezes de forma velada para moldar desejos e criar necessidades que vão além do que é essencial para o bem-estar.
+De acordo com as fontes, essa influência ocorre das seguintes formas:
 >
->    Exemplo de Pipeline Real: Imagine uma empresa que recebe milhares de arquivos JSON diários contendo logs de acesso a um site, armazenados num bucket do Amazon S3. Você pode configurar um pipeline usando a ferramenta Auto Loader, que detecta e ingere de forma incremental e tolerante a falhas os novos arquivos JSON que chegam. Os dados são carregados e salvos em uma Tabela Delta Bronze exatamente com as colunas originais, sem limpar nenhum registro ainda.
+> 1. Criação de "Falsas Necessidades" e Estereótipos
+> A publicidade raramente se limita a informar sobre a utilidade de um produto; em vez disso, ela explora vulnerabilidades psicológicas, como vaidade, insegurança e o desejo de aceitação social.
+Idealização da Realidade: Os anúncios apresentam pessoas "perfeitas", bem-sucedidas e felizes em ambientes impecáveis, o que faz com que o consumidor se sinta incompleto e busque a solução nessa "felicidade mercadoria".
+Ostentação: Especialmente nas redes sociais, o consumo é associado ao status. Ter determinados itens torna-se uma forma de afiliação social e identidade cultural.
 >
->2. Camada Silver (Limpeza / Transformação)
->Na camada Silver, os dados brutos da camada Bronze são higienizados, validados, enriquecidos e integrados. O objetivo aqui é resolver inconsistências, criar padronização e fornecer uma base limpa que já pode ser usada diretamente por Cientistas de Dados para a construção de modelos de Machine Learning (ML).
+> 2. Redes Sociais como "Vitrines de Pessoas"
+> As redes sociais (Facebook, Instagram, YouTube) transformaram a lógica do consumo ao "coisificar" os indivíduos.
+O Usuário como Produto: Nesses espaços, quando não há um produto físico sendo vendido, o próprio usuário e seus dados tornam-se o produto.
+Algoritmos e Bombardeio Visual: O uso de algoritmos, como o do Instagram, expõe os usuários a um fluxo constante de imagens de corpos e vidas "perfeitas", gerando angústia e impulsionando o desejo de consumo por comparação.
+Influenciadores Digitais: Por outro lado, as redes também permitem que influenciadores ajudem a promover o consumo consciente, disseminando informações sobre práticas sustentáveis e marcas éticas.
+> 3. Estratégias Digitais e de Monitoramento
+> A tecnologia permite que as empresas alcancem o consumidor de forma muito mais precisa e agressiva:
+Retargeting: É a estratégia de "perseguir" o consumidor com anúncios de itens que ele pesquisou anteriormente na internet, buscando converter a dúvida em compra por insistência.
+Publicidade Dinâmica: As peças publicitárias atuais consideram faixa etária, localização, capacidade econômica e buscas recentes para personalizar a oferta.
+Acesso 24/7: O smartphone faz com que o fornecedor esteja "na palma da mão" do consumidor a qualquer momento, facilitando e incentivando as compras por impulso.
 >
->    Exemplo de Pipeline Real: Um pipeline escrito em PySpark (e possivelmente orquestrado via Lakeflow Jobs) que lê os logs de acesso da tabela Bronze. O código limpa os registros que vieram com valores nulos, padroniza os tipos de dados (por exemplo, converte uma string de tempo "2026-05-31T15:08" para o formato nativo TIMESTAMP) e aplica regras de qualidade de dados. Além disso, usando a instrução MERGE do Delta Lake, você pode fazer uma operação do tipo Slowly Changing Dimension (SCD) Tipo 2, onde o pipeline atualiza informações cadastrais de usuários mantendo as versões antigas com datas de vigência (effectiveDate, endDate), gravando esse resultado altamente unificado na Tabela Delta Silver.
+> 4. Vulnerabilidade de Crianças e Jovens
+> As fontes destacam que crianças e jovens são os alvos mais vulneráveis, pois ainda não possuem uma mentalidade crítica desenvolvida para discernir as intenções por trás das mensagens publicitárias. A publicidade explora a necessidade do jovem de pertencer a um grupo, vendendo marcas como símbolos de segurança e aceitação.
 >
->3. Camada Gold (Serviço / Agregação para Negócios)
->A camada Gold serve os dados altamente refinados e agregados, que são perfeitamente estruturados e otimizados para responder a problemas específicos de negócios. Essa camada é montada para ter baixa latência em consultas realizadas por equipes de Business Intelligence (BI) e aplicativos de ponta.
->
->    Exemplo de Pipeline Real: Um pipeline em SQL onde analistas criam uma Visualização Materializada (Materialized View) ou uma Streaming Table agregada. O script SQL pode fazer um JOIN (cruzamento) entre uma tabela Silver de "Pedidos" e uma de "Clientes", contabilizando o volume diário de vendas por estado (GROUP BY state, order_date). Essa view materializada Gold servirá os dados limpos diretamente a ferramentas analíticas de terceiros (como Power BI ou Tableau) através de um SQL Warehouse autogerenciado, permitindo que as equipes de negócios construam painéis (dashboards) sem ter que reprocessar ou lidar com lógicas pesadas de transformação.
-
+> 5. Vigilância e "Greenwashing"
+> Embora as redes sociais facilitem o consumo desenfreado, elas também deram ao consumidor o poder de vigiar os negócios e espalhar informações sobre práticas antiéticas das empresas com rapidez. Isso força as marcas a serem mais transparentes, embora muitas ainda pratiquem o greenwashing — usando um discurso ecológico superficial apenas como estratégia de marketing, sem implementar sustentabilidade real.
+Em suma, a publicidade e as redes sociais movem a sociedade em direção à cultura do "ter" em detrimento do "ser", transformando o ato de comprar em uma forma de lazer e obrigação cívica, o que exige um esforço maior de reflexão por parte do consumidor consciente
 
 #### Contexto & Aprendizagem
+A resposta é satisfatória e alinha com o conteúdo alimentado, a resposta esta sempre em conformidade com o segundo modelo, porem sua profundidade e crítica traz exemlpos mais compostos. A análise dos parametros e terminologia do tema analisado estãod e acordo.
 
-Resposta tecnicamente sólida e alinhada à visão Databricks. 
-O principal ponto de atenção: a Arquitetura Medallion é uma convenção lógica de organização de dados, não uma exigência tecnológica nem exclusividade do Delta Lake. Pode ser implementada com Iceberg, BigQuery, Snowflake ou até diretórios em S3. A resposta do NotebookLM, por refletir as fontes Databricks, tende a apresentar práticas comuns da plataforma como definições universais — o que são, na verdade, boas heurísticas, não regras arquiteturais obrigatórias:
-
-- Bronze não é obrigatoriamente "sem transformação" — metadados de ingestão (timestamp, origem, batch_id) ainda são Bronze
-- Silver não é exclusivamente para ML — depende da organização
-- Gold não é necessariamente agregada — tabelas dimensionais e fatos sem agregação são Gold igualmente
-
-O critério real da camada Gold é: pronta para consumo por um caso de negócio específico.
-
-### Prompt 5 - Quais tópicos da documentação carregada têm maior peso na prova Databricks Data Engineer Associate? Organize por categoria.
-
-> Com base no guia oficial do exame fornecido na documentação, não há uma especificação exata do peso (porcentagem ou número de questões) para cada categoria na prova. A avaliação conta com 45 questões de múltipla escolha que cobrem todo o espectro das operações de engenharia de dados.
-> Abaixo estão os tópicos cobrados na prova, organizados exatamente pelas categorias delineadas no guia oficial:
-> 1. Databricks Intelligence Platform
+### Prompt 5 - A reciclagem tem papel protagonista na sociedade atual ou é um mito?
+> Com base nos materiais, a reciclagem não é um mito, mas a ideia de que ela seja a solução protagonista e única para a crise ambiental é frequentemente questionada como uma visão reducionista e insuficiente.
+Embora seja descrita como a "indústria do presente" e uma ferramenta vital para poupar recursos, as fontes deixam claro que ela deve ser encarada como o último recurso dentro de uma hierarquia de prioridades.
+Abaixo, detalho os pontos centrais sobre o papel da reciclagem na sociedade atual:
 >
->    Compreensão dos componentes centrais da plataforma, como arquitetura, Delta Lake e Unity Catalog.
->    Serviços de computação: entendimento de características, limitações, modelos de custo e seleção da melhor opção para cada caso de uso.
+> 1. A Realidade dos Números no Brasil
+> A reciclagem está longe de ser um "protagonista" efetivo na gestão de resíduos brasileira, apresentando dados preocupantes:
+Baixa efetividade geral: Apenas 2,1% de todo o resíduo coletado no Brasil é efetivamente reciclado.
+A crise do plástico: Enquanto a média mundial de reciclagem de plástico é de 9%, no Brasil esse número cai para apenas 1,28%, apesar de o país ser o 4º maior produtor de lixo plástico do mundo.
+O sucesso do alumínio: Em contraste, o país é líder mundial na reciclagem de latas de alumínio, com um índice de 97,4%.
+Lixo eletrônico: Globalmente, produz-se 50 milhões de toneladas por ano, mas apenas 20% é reciclado, resultando em contaminação por metais pesados.
 >
-> 2. Data Ingestion and Loading (Ingestão e Carregamento)
+> 2. A Armadilha da Responsabilização Individual
+> As fontes alertam que o foco excessivo na reciclagem pode ser usado de forma enganosa:
+Visão Reducionista: Críticos apontam que muitas ações educativas focam exclusivamente na reciclagem, o que estimula a responsabilização individual em detrimento de um debate sobre a "Ecologia Política" e a lógica de produção.
+Anulação da Reação Política: Esse modelo pode anular a capacidade de reação da sociedade contra uma ordem socioambiental insustentável, pois faz o consumidor acreditar que o problema termina no descarte correto.
+Greenwashing: Algumas corporações praticam o "banho verde", mascarando processos produtivos danosos com embalagens que se dizem recicláveis apenas para aumentar vendas.
 >
->    Padrões de ingestão (em lote/batch, streaming e cargas incrementais) a partir de arquivos locais ou através do Lakeflow Connect.
->    Utilização do comando COPY INTO e do Auto Loader (incluindo evolução e imposição de esquema) para carregar dados em tabelas do Unity Catalog.
->    Conexões via clientes REST e JDBC/ODBC, além do processamento de dados semiestruturados/não estruturados (como JSON).
->    Saber priorizar o método correto de ingestão com base em volume, frequência e requisitos de governança.
+> 3. A Hierarquia dos 5 Rs: Reciclar é a Última Etapa
+> Para que o consumo seja sustentável, a reciclagem não deve ser o ponto de partida, mas sim o ponto final da cadeia de pensamento:Repensar, Recusar, Reduzir e Reutilizar: Estes passos devem vir primeiro.
+Evitar a geração: A forma mais direta de mudar o impacto ambiental é a não geração de resíduos.
+Reciclar apenas o que resta: A proposta correta é reduzir o consumo ao máximo e reciclar apenas aquilo que não se consegue diminuir ou reutilizar.
 >
-> 3. Data Transformation and Modeling (Transformação e Modelagem)
+> 4. Importância e Benefícios Reais
+>Mesmo com limitações, a reciclagem é fundamental para a Economia Circular:
+Preservação de recursos: Quando se recicla uma lata, economiza-se a extração de alumínio da natureza.
+Redução de aterros: Materiais encaminhados para reciclagem desafogam os aterros sanitários e prolongam seu tempo de vida.
+Inclusão Social: A reciclagem gera renda para milhares de catadores, que são responsáveis por 90% de todo o material que chega às indústrias de reciclagem no Brasil.
 >
->    Limpeza de dados das tabelas Bronze usando PySpark/SQL, tratamento de nulos e padronização de tipos de dados rumo à camada Silver.
->    Manipulação de DataFrames: junções (joins de diversos tipos), renomeação, filtros e explosão de arrays.
->    Operações de agregação e deduplicação de dados.
->    Ajuste de performance com parâmetros básicos, como spark.sql.shuffle.partitions e opções de memória.
->    Criação de objetos da camada Gold, incluindo tabelas de streaming e visualizações materializadas (materialized views), com aplicação de regras de qualidade de dados.
->
-> 4. Working with Lakeflow Jobs (Trabalhando com Jobs)
->
->    Orquestração de pipelines e fluxos de controle usando tarefas condicionais (ramificações/loops) e retentativas em grafos baseados em DAG.
->    Configuração de dependências entre tarefas comuns (notebooks, SQL, dashboards).
->    Definição de gatilhos (triggers) baseados em tempo ou orientados a dados (ex: chegada de arquivos, atualização de tabelas).
->
-> 5. Implementing CI/CD (Implementação de CI/CD)
->
->    Gerenciamento do fluxo de código (criação de branches, commits, pull requests) diretamente pelos Databricks Git Folders.
->    Utilização e implantação de Declarative Automation Bundles (antigos Asset Bundles) para promover recursos (jobs, pipelines) entre ambientes (dev, test, prod).
->    Uso da Databricks CLI em fluxos de CI/CD.
->
-> 6. Troubleshooting, Monitoring, and Optimization (Solução de Problemas, Monitoramento e Otimização)
->
->    Monitoramento de saúde e tempo de execução de pipelines usando a interface do Lakeflow Jobs.
->    Identificação de gargalos de performance na Spark UI, como inclinação de dados (data skew), embaralhamento (shuffling) e despejo em disco (disk spilling).
->    Diagnóstico de problemas de inicialização de clusters, conflitos de bibliotecas e erros de falta de memória (OOM).
->    Compreensão de recursos de otimização preditiva e Liquid Clustering.
->
-> 7. Governance and Security (Governança e Segurança)
->
->    Diferenciação e operações (criar, modificar, converter) entre tabelas gerenciadas (managed) e externas (external) no Unity Catalog.
->    Configuração de controle de acessos em hierarquias de segurança usando comandos SQL como GRANT, REVOKE e DENY.
->    Controle centralizado para dados sensíveis utilizando políticas de mascaramento de colunas (column-level masking) e filtragem em nível de linha (row-level security) no Unity Catalog.
+>Em resumo, a reciclagem é uma prática necessária e benéfica, mas tratá-la como a solução definitiva para o consumismo é um equívoco. A verdadeira transformação exige mudanças culturais e políticas que priorizem a redução da produção e a responsabilidade dos fabricantes pelo ciclo de vida completo de seus produtos.  
 
 #### Contexto & Aprendizagem
-Esta foi a primeira pergunta onde a limitação estava nas fontes, não no NotebookLM: o guia oficial (fonte 5) lista as categorias do exame mas não publica a distribuição de questões por tópico — e a resposta refletiu isso fielmente, reproduzindo as categorias sem ponderá-las.
+A resposta traz análises e contrapontos, pois o conteudo possui mais pontos a serem analisados e conceitos críticos mais abstratos para análise.
+Dainte de uma pergunta que confronta pontos de análise mais aberta, o modelo mostrou seu pontoe ainda assim alinhado com a resposta mais coerente, o segnudo modelo valida a resposta e a direção do comentário.
 
-A validação com o ChatGPT gerou uma priorização em tiers que vai além das fontes carregadas — útil como orientação de estudo, mas não verificável, já que o modelo não citou as bases para a hierarquia sugerida.
-
-Priorização sugerida para o estudo:
-
-- Tier 1 (altíssima prioridade): Delta Lake (ACID, Time Travel, MERGE, schema), Medallion, Auto Loader / COPY INTO, DataFrames e Spark SQL
-- Tier 2: Unity Catalog (managed vs external, permissões), Streaming
-- Tier 3: Lakeflow Jobs, DAGs, Monitoramento / Spark UI
-- Tier 4 (menor peso no Associate): CI/CD, Bundles, Liquid Clustering
-
-Nota: os tópicos de Delta Lake e Transaction Log já foram cobertos nos Prompts 3 e 4 em nível acima do exigido pelo Associate — o gap de estudo está em Spark SQL prático, Auto Loader e Unity Catalog.
-
-### Prompt 6 - Explique os tipos de cluster no Databricks e como o Lakeflow Jobs orquestra pipelines.
-
-> **1. Tipos de Cluster**
+### Prompt 6 - Dentro do cenario geral, onde podemos começar a corrigir o problema do consumo na sociedade moderna, o primeiro e principal agente?
+> Dentro do cenário geral apresentado pelas fontes, o primeiro e principal agente para começar a corrigir o problema do consumo é o indivíduo/consumidor. Embora a crise ambiental exija um esforço coletivo, as > transformações mais profundas devem começar pelo cotidiano e pelas ações individuais.
+Aqui estão os pontos fundamentais sobre como e por onde começar essa mudança, segundo o material:
+> A Reflexão Individual como Ponto de Partida: A mudança de hábitos e a revisão da forma como habitamos o mundo devem partir de cada pessoa por meio de um processo de reflexão constante.
+Antes de qualquer compra, o indivíduo deve se perguntar se o produto é realmente necessário e qual será sua utilidade real.
+O Consumidor como Protagonista e Ato Político: O consumo consciente é apontado como o protagonista de uma mudança positiva.
+Ao escolher o que comprar e de quem comprar, o cidadão exerce um ato político, criando hábitos de vida diferentes e valorizando marcas que possuem processos transparentes e éticos.
+> A Mudança no Mindset de Compra: É necessário que o indivíduo substitua a busca insaciável por "bem-estar" através da mercadoria pela distinção entre o que é necessário e o que é supérfluo ou excessivo.
+Esse novo "mindset" envolve repensar a lógica de produção e buscar a economia circular.
+Iniciativas Cotidianas: A correção do problema começa em ações simples, como planejar as compras, reutilizar embalagens, separar o lixo, evitar produtos piratas e preferir produtores locais.
+Essas pequenas atitudes, quando somadas e multiplicadas, geram grandes transformações.
+>Apesar do papel central do indivíduo, as fontes fazem uma ressalva importante: os consumidores não devem assumir sozinhos toda a responsabilidade.
+> A solução definitiva depende de um esforço compartilhado entre governos (através de políticas públicas e fiscalização), setor produtivo (empresas adotando a responsabilidade socioambiental) e a sociedade civil organizada.
+Portanto, o indivíduo inicia o processo no âmbito privado, mas deve completá-lo através da participação social em espaços como conselhos municipais e audiências públicas para influenciar decisões coletivas.
 >
-> - **All-Purpose Cluster:** Configurado para desenvolvimento interativo, exploração de dados e consultas ad hoc por múltiplos usuários simultâneos. Permanece ativo até encerramento manual ou limite de inatividade. *(Informação parcialmente externa às fontes)*
-> - **Job Cluster:** Projetado para pipelines ETL automatizados e workloads de produção. Provisionado dinamicamente no início do job e encerrado ao término, garantindo recursos limpos e isolados. *(Informação parcialmente externa às fontes)*
->
-> **2. Orquestração com Lakeflow Jobs**
->
-> - **DAGs:** As tarefas e sua ordem de execução são representadas por um Grafo Acíclico Direcionado (DAG), permitindo desde pipelines simples até fluxos com centenas de tarefas interconectadas.
-> - **Tipos de tarefas suportadas:** Notebooks, Consultas SQL, Painéis (Dashboards), Scripts Python e Pipeline Tasks (para invocar Lakeflow Spark Declarative Pipelines, incluindo streaming tables e materialized views).
-> - **Dependências e fluxo de controle:** Tarefas são configuradas com dependências mútuas (uma tarefa só inicia após a conclusão da "pai"). Suporta ramificações condicionais (if/else), loops (for each) e retentativas automáticas em caso de falha.
-> - **Tipos de Trigger:**
->     - *Baseado em tempo (Time-based):* execução em cronograma fixo (ex: todos os dias às 06h00).
->     - *Orientado a dados (Data-driven):* execução reativa a eventos — chegada de novos arquivos (file arrival) ou atualização de tabelas (table update).
-
 #### Contexto & Aprendizagem
-
-O NotebookLM foi transparente ao sinalizar explicitamente quais informações vieram das fontes e quais foram complementadas com conhecimento externo — comportamento esperado e que reforça sua confiabilidade como ferramenta de estudo.
-
-A validação com o ChatGPT (8,5/10) apontou uma correção importante: o critério de escolha entre All-Purpose e Job Cluster **não é custo**, mas sim o tipo de uso — **interativo vs. automatizado**. Custo é consequência, não critério. Essa é a distinção que a prova cobra.
-
-### Prompt 7 - Explique o Auto Loader e o Delta Live Tables (DLT) e como se relacionam.
-
-> **1. Auto Loader**
->
-> - **O que é:** Ferramenta nativa construída sobre o Structured Streaming (fonte `cloudFiles`) para ingerir dados de armazenamentos em nuvem (S3, ADLS, GCS, Volumes) de forma eficiente, idempotente e contínua para o Lakehouse.
-> - **Detecção incremental:** Rastreia estado via diretório de checkpoint tolerante a falhas. Dois modos de descoberta:
->     - *Directory Listing:* lista arquivos de forma otimizada; custo escala pelo número de arquivos ingeridos.
->     - *File Notification:* configura serviços de notificação na nuvem, eliminando listagem de diretórios — preferível para grandes volumes.
-> - **Schema Evolution e Enforcement:** Infere o esquema automaticamente, detecta desvios (schema drift), evolui o esquema para novas colunas e retém dados malformados sem perda.
-> - **Auto Loader vs. COPY INTO:**
->     - *Auto Loader:* alta escala, streaming contínuo, schema evolution complexo.
->     - *COPY INTO:* cargas incrementais menores, execução manual ou batch ocasional.
->
-> **2. Delta Live Tables (DLT) — Lakeflow Spark Declarative Pipelines**
->
-> - **O que é:** Framework declarativo (SQL e Python) onde você define *o que* transformar — o framework gerencia dependências, infraestrutura, escalonamento e tratamento de erros automaticamente.
-> - **Streaming Table** *(antiga Streaming Live Table):* criada com modificador `STREAM`, processa incrementalmente apenas novos dados — ideal para camada Bronze/ingestão.
-> - **Materialized View** *(antiga Live Table):* visualização pré-computada que reflete o estado atual dos dados, recalculando resultados e agregações — ideal para camada Gold.
-> - **Expectations (Qualidade de Dados):** Regras de validação aplicadas diretamente no pipeline. Três modos de violação:
->     - *Warn:* registra a violação, mantém o dado.
->     - *Drop:* descarta registros inválidos.
->     - *Fail:* interrompe a atualização do pipeline.
->
-> **3. Integração: Auto Loader dentro de pipelines DLT**
->
-> - O Auto Loader é a principal porta de entrada de dados em pipelines declarativos. Ao criar uma Streaming Table lendo de cloud storage, o Auto Loader detecta arquivos continuamente.
-> - Dentro de um pipeline DLT, o framework gerencia automaticamente checkpoints e controle de estado — sem configuração manual de infraestrutura.
-> - Fluxo de referência: `Storage → Auto Loader → Streaming Table (Bronze) → Transformações (Silver) → Materialized View (Gold)`
-
-#### Contexto & Aprendizagem
-
-A melhor resposta do projeto até agora — 9 a 9,5/10 segundo o ChatGPT, totalmente alinhada com a forma atual de ensino da Databricks, incluindo a nomenclatura atualizada (Streaming Table / Materialized View em vez de Streaming Live Table / Live Table).
-
-Dois pontos que merecem destaque para a prova:
-
-- **Exactly-once é uma simplificação:** o Auto Loader por si só não garante semântica exactly-once — ela resulta da combinação com o Structured Streaming e o Delta Lake. Para o nível Associate a simplificação é aceitável, mas vale saber a nuance.
-- **Expectations têm três modos (Warn / Drop / Fail):** a resposta definiu o conceito corretamente mas não explicitou os modos — que são exatamente o que a prova costuma cobrar.
+A análise feita mostra mais um resposta alinhada e completa, com base no material fornecido, o segundo modelo valida o conceito e alinhamento, continua batendo na coletividade, mas estas respostas continuam trazendo certo "romantismo" do material fornecido, porem este tom faz parte da análise comparativa para dar um direção para o pensamento crítico.
 
 ---
 
